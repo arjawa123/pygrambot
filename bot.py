@@ -49,6 +49,19 @@ def main():
     app.add_handler(TelegramCommandHandler("model", CommandHandler.model))
     app.add_handler(TelegramCommandHandler("hostinfo", CommandHandler.hostinfo))
     
+    # Memory Commands
+    app.add_handler(TelegramCommandHandler("remember", CommandHandler.remember))
+    app.add_handler(TelegramCommandHandler("memories", CommandHandler.memories))
+    app.add_handler(TelegramCommandHandler("forget", CommandHandler.forget))
+    
+    # File Management Commands
+    app.add_handler(TelegramCommandHandler("files", CommandHandler.files))
+    app.add_handler(TelegramCommandHandler("deletefile", CommandHandler.deletefile))
+    app.add_handler(TelegramCommandHandler("clearfiles", CommandHandler.clearfiles))
+    
+    # Web Commands
+    app.add_handler(TelegramCommandHandler("web", CommandHandler.web))
+    
     # 5. Add Message Handlers
     user_filter = filters.ALL
     if Config.ALLOWED_USER_IDS:

@@ -4,17 +4,19 @@ from telegram.ext import ContextTypes
 from telegram.constants import ChatAction
 from app.db import Database
 from app.llm.manager import LLMManager
+from app.services.memory_service import MemoryService
 from app.config import Config
 
 logger = logging.getLogger(__name__)
 
-SYSTEM_PROMPT = """Kamu adalah Pygram AI Assistant, asisten produktif, cerdas, dan membantu.
+SYSTEM_PROMPT = """Kamu adalah Pygram AI Assistant, asisten produktif yang cerdas.
 Aturan:
 1. Jawab singkat, akurat, dan praktis.
-2. Gunakan konteks history chat dan file terbaru yang diberikan.
-3. Hindari halusinasi. Jika tidak yakin, katakan terus terang.
-4. Gunakan gaya bahasa user (Bahasa Indonesia secara default).
-5. Format jawaban dengan Markdown agar rapi di Telegram.
+2. Gunakan KONTEKS yang diberikan (Memori, File, Web, History).
+3. Memori berisi fakta penting tentang user atau preferensi chat ini. Gunakan itu agar personal.
+4. Jika ada konteks Web, ringkas atau jawab berdasarkan isi web tersebut.
+5. Gunakan gaya bahasa user (Bahasa Indonesia default).
+6. Format jawaban dengan Markdown.
 """
 
 class ChatHandler:
@@ -35,20 +37,34 @@ class ChatHandler:
         # 2. Show typing
         await context.bot.send_chat_action(chat_id=chat_id, action=ChatAction.TYPING)
 
-        # 3. Build messages with context
-        history = await Database.get_history(chat_id)
-        recent_files = await Database.get_recent_files(chat_id, 2)
-
+        # 3. Build messages with ALL contexts
         messages = [{"role": "system", "content": SYSTEM_PROMPT}]
         
-        # Add file context
-        if recent_files:
-            file_context = "Konteks file terbaru:\n"
-            for f in recent_files:
-                file_context += f"• File: {f[0]}\nIsi: {f[2] or 'Tidak ada teks'}\n\n"
-            messages.append({"role": "system", "content": file_context})
+        # A. Add Memory Context
+        memory_ctx = await MemoryService.get_memory_context(chat_id)
+        if memory_ctx:
+            messages.append({"role": "system", "content": memory_ctx})
 
-        # Add chat history
+        # B. Add Web Context (Temporary for current session)
+        web_data = context.chat_data.get('web_context')
+        if web_data:
+            messages.append({
+                "role": "system", 
+                "content": f"Konteks Web Terbaru (URL: {web_data['url']}):\n{web_data['content']}"
+            })
+            # Optional: clear after use or keep? Let's keep for one more turn
+            # context.chat_data.pop('web_context', None)
+
+        # C. Add File Context
+        recent_files = await Database.get_recent_files(chat_id, 2)
+        if recent_files:
+            file_ctx = "Konteks file terbaru:\n"
+            for f in recent_files:
+                file_ctx += f"• File: {f[0]}\nIsi: {f[2] or 'Tidak ada teks'}\n\n"
+            messages.append({"role": "system", "content": file_ctx})
+
+        # D. Add Chat History
+        history = await Database.get_history(chat_id)
         messages.extend(history)
 
         try:
@@ -63,7 +79,7 @@ class ChatHandler:
 
         except Exception as e:
             logger.error(f"Chat error: {e}")
-            await update.message.reply_text(f"❌ **Maaf, terjadi kesalahan:**\n`{str(e)}`", parse_mode="Markdown")
+            await update.message.reply_text(f"❌ **Kesalahan:**\n`{str(e)}`", parse_mode="Markdown")
 
     async def send_long_message(self, update: Update, text: str):
         limit = Config.MAX_REPLY_CHARS
