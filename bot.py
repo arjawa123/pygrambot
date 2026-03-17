@@ -19,6 +19,7 @@ from app.db import init_db
 from app.handlers.command_handler import CommandHandler
 from app.handlers.chat_handler import ChatHandler
 from app.handlers.file_handler import FileHandler
+from app.handlers.termux_handler import TermuxHandler
 from app.utils.logging_setup import setup_logging, get_logger
 from app.services.telegram_command_service import setup_bot_commands
 from app.services.reminder_service import ReminderService
@@ -41,9 +42,11 @@ async def error_handler(update: object, context: ContextTypes.DEFAULT_TYPE) -> N
     # Notify user if update has an effective message
     if update and hasattr(update, 'effective_message') and update.effective_message:
         try:
+            # Escape error message for HTML
+            error_msg = html.escape(str(context.error))
             await update.effective_message.reply_text(
-                f"❌ **Internal Error:**\n`{str(context.error)}`",
-                parse_mode=ParseMode.MARKDOWN
+                f"❌ <b>Internal Error:</b>\n<code>{error_msg}</code>",
+                parse_mode=ParseMode.HTML
             )
         except Exception as e:
             logger.error(f"Failed to send error message to user: {e}")
@@ -109,7 +112,19 @@ def main():
     app.add_handler(TelegramCommandHandler("web", CommandHandler.web))
     app.add_handler(TelegramCommandHandler("saveweb", CommandHandler.saveweb))
     app.add_handler(TelegramCommandHandler("exitweb", CommandHandler.exitweb))
-    
+
+    # Device Commands (Termux API)
+    app.add_handler(TelegramCommandHandler("battery", TermuxHandler.battery_command))
+    app.add_handler(TelegramCommandHandler("toast", TermuxHandler.toast_command))
+    app.add_handler(TelegramCommandHandler("tts", TermuxHandler.tts_command))
+    app.add_handler(TelegramCommandHandler("location", TermuxHandler.location_command))
+    app.add_handler(TelegramCommandHandler("torch", TermuxHandler.torch_command))
+    app.add_handler(TelegramCommandHandler("vibrate", TermuxHandler.vibrate_command))
+    app.add_handler(TelegramCommandHandler("clipboard", TermuxHandler.clipboard_command))
+    app.add_handler(TelegramCommandHandler("photo", TermuxHandler.photo_command))
+    app.add_handler(TelegramCommandHandler("volume", TermuxHandler.volume_command))
+    app.add_handler(TelegramCommandHandler("sms_send", TermuxHandler.sms_send_command))
+
     # Callback Handlers
     app.add_handler(CallbackQueryHandler(CommandHandler.handle_callback))
     

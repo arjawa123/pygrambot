@@ -1,6 +1,8 @@
 import os
 import logging
+import html
 from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
+from telegram.constants import ParseMode
 from telegram.ext import ContextTypes
 from app.db import Database
 from app.services.system_service import SystemService
@@ -33,27 +35,27 @@ class CommandHandler:
     @staticmethod
     async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
         text = (
-            "👋 **Halo! Saya Pygram AI Assistant.**\n\n"
+            "👋 <b>Halo! Saya Pygram AI Assistant.</b>\n\n"
             "Saya asisten serba bisa yang dilengkapi dengan memori persisten, "
             "kemampuan analisis file, dan ekstraksi web.\n\n"
-            "📜 **Ketik `/` untuk melihat semua command.**"
+            "📜 <b>Ketik <code>/</code> untuk melihat semua command.</b>"
         )
-        await update.message.reply_text(text, parse_mode="Markdown")
+        await update.message.reply_text(text, parse_mode=ParseMode.HTML)
 
     @staticmethod
     async def help(update: Update, context: ContextTypes.DEFAULT_TYPE):
         categories = get_commands_by_category()
-        help_text = "🛠️ **Bantuan & Fitur Pygram**\n\n"
+        help_text = "🛠️ <b>Bantuan & Fitur Pygram</b>\n\n"
         for category, commands in categories.items():
             icon = CATEGORY_ICONS.get(category, "🔹")
-            help_text += f"{icon} **{category}**\n"
+            help_text += f"{icon} <b>{category}</b>\n"
             for cmd in commands:
                 cmd_link = f"/{cmd.command}"
-                usage_info = cmd.usage[len(cmd_link):] if cmd.usage and " " in cmd.usage else ""
+                usage_info = html.escape(cmd.usage[len(cmd_link):]) if cmd.usage and " " in cmd.usage else ""
                 admin_tag = " (Admin Only)" if cmd.admin_only else ""
-                help_text += f"{cmd_link}{usage_info} — {cmd.description}{admin_tag}\n"
+                help_text += f"<b>{cmd_link}</b>{usage_info} — {html.escape(cmd.description)}{admin_tag}\n"
             help_text += "\n"
-        await update.message.reply_text(help_text, parse_mode="Markdown")
+        await update.message.reply_text(help_text, parse_mode=ParseMode.HTML)
 
     @staticmethod
     async def web(update: Update, context: ContextTypes.DEFAULT_TYPE):

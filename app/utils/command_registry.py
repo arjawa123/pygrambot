@@ -15,7 +15,8 @@ CATEGORY_ICONS = {
     "Files": "📁",
     "Memory": "🧠",
     "Web": "🌐",
-    "System": "⚙️"
+    "System": "⚙️",
+    "Device": "📱"
 }
 
 # Single Source of Truth for all bot commands
@@ -52,6 +53,18 @@ COMMAND_REGISTRY: List[BotCommandInfo] = [
     BotCommandInfo("hostinfo", "Info host/device", "System", admin_only=True),
     BotCommandInfo("logs", "Lihat log terbaru", "System", admin_only=True, usage="/logs <n>"),
     BotCommandInfo("exec", "Eksekusi CLI command", "System", admin_only=True, usage="/exec <command>"),
+
+    # Device (Termux API - Admin Only)
+    BotCommandInfo("battery", "Cek status baterai device", "Device", admin_only=True),
+    BotCommandInfo("toast", "Tampilkan pesan toast di device", "Device", admin_only=True, usage="/toast <pesan>"),
+    BotCommandInfo("tts", "Suarakan teks di device (TTS)", "Device", admin_only=True, usage="/tts <teks>"),
+    BotCommandInfo("location", "Cek lokasi GPS device", "Device", admin_only=True),
+    BotCommandInfo("torch", "Nyalakan/matikan senter", "Device", admin_only=True, usage="/torch on|off"),
+    BotCommandInfo("vibrate", "Getarkan device", "Device", admin_only=True, usage="/vibrate <ms>"),
+    BotCommandInfo("clipboard", "Baca/tulis clipboard device", "Device", admin_only=True, usage="/clipboard [teks]"),
+    BotCommandInfo("photo", "Ambil foto dari kamera device", "Device", admin_only=True),
+    BotCommandInfo("volume", "Cek volume audio device", "Device", admin_only=True),
+    BotCommandInfo("sms_send", "Kirim SMS dari device", "Device", admin_only=True, usage="/sms_send <nomor> <pesan>"),
 ]
 
 def get_commands_by_category():
