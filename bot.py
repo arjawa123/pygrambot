@@ -3,6 +3,7 @@ from telegram.ext import (
     ApplicationBuilder,
     CommandHandler as TelegramCommandHandler,
     MessageHandler,
+    CallbackQueryHandler,
     filters,
 )
 from app.config import Config
@@ -64,6 +65,11 @@ def main():
     
     # Web Commands
     app.add_handler(TelegramCommandHandler("web", CommandHandler.web))
+    app.add_handler(TelegramCommandHandler("saveweb", CommandHandler.saveweb))
+    app.add_handler(TelegramCommandHandler("exitweb", CommandHandler.exitweb))
+    
+    # Callback Handlers
+    app.add_handler(CallbackQueryHandler(CommandHandler.handle_callback))
     
     # 5. Add Message Handlers
     user_filter = filters.ALL

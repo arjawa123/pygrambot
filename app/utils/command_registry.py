@@ -40,6 +40,8 @@ COMMAND_REGISTRY: List[BotCommandInfo] = [
     
     # Web
     BotCommandInfo("web", "Baca konten website", "Web", usage="/web <url>"),
+    BotCommandInfo("saveweb", "Simpan konten web ke memory", "Web"),
+    BotCommandInfo("exitweb", "Keluar dari mode tanya-jawab web", "Web"),
     
     # System (Admin Only)
     BotCommandInfo("hostinfo", "Info host/device", "System", admin_only=True),

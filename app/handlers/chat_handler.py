@@ -47,13 +47,20 @@ class ChatHandler:
 
         # B. Add Web Context (Temporary for current session)
         web_data = context.chat_data.get('web_context')
+        web_mode = context.chat_data.get('web_qa_mode', False)
+        
         if web_data:
-            messages.append({
-                "role": "system", 
-                "content": f"Konteks Web Terbaru (URL: {web_data['url']}):\n{web_data['content']}"
-            })
-            # Optional: clear after use or keep? Let's keep for one more turn
-            # context.chat_data.pop('web_context', None)
+            if web_mode:
+                # When Q&A mode is active, make the context VERY prominent
+                messages.append({
+                    "role": "system", 
+                    "content": f"PRIORITAS UTAMA: Kamu sedang dalam mode Web Q&A. Jawablah pertanyaan user HANYA berdasarkan konten dari URL: {web_data['url']}. \n\nISI KONTEN:\n{web_data['content']}"
+                })
+            else:
+                messages.append({
+                    "role": "system", 
+                    "content": f"Konteks Web Terbaru (URL: {web_data['url']}):\n{web_data['content']}"
+                })
 
         # C. Add File Context
         recent_files = await Database.get_recent_files(chat_id, 2)
@@ -71,6 +78,10 @@ class ChatHandler:
             # 4. Get AI Response
             response = await self.llm.get_response(messages)
             
+            # If Web QA Mode is active, add a prefix
+            if context.chat_data.get('web_qa_mode'):
+                response = f"🌐 **Berdasarkan web terakhir:**\n\n{response}"
+
             # 5. Save assistant response
             await Database.add_message(chat_id, user_id, "assistant", response)
 

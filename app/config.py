@@ -29,6 +29,12 @@ class Config:
     # Runtime Info
     BOT_START_TIME = time.time()
 
+    # Web Scraper Configuration
+    WEB_FETCH_TIMEOUT = int(os.getenv("WEB_FETCH_TIMEOUT", "20"))
+    WEB_MAX_CHARS = int(os.getenv("WEB_MAX_CHARS", "12000"))
+    WEB_MAX_CONTENT_LENGTH = int(os.getenv("WEB_MAX_CONTENT_LENGTH", "2000000")) # 2MB
+    WEB_USER_AGENT = os.getenv("WEB_USER_AGENT", "PygramBot/1.0 (Telegram AI Assistant)")
+
     # LLM Providers
     PRIMARY_PROVIDER = os.getenv("PRIMARY_PROVIDER", "groq").lower()
     
