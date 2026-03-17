@@ -99,16 +99,23 @@ class ChatHandler:
 
     async def send_long_message(self, update: Update, text: str):
         limit = Config.MAX_REPLY_CHARS
+        chat_id = update.effective_chat.id
         
         # Helper to send a single chunk with retry
         async def send_chunk(chunk_text: str):
             try:
-                await update.message.reply_text(chunk_text, parse_mode="Markdown")
+                # If update.message exists, use it (reply style)
+                if update.message:
+                    await update.message.reply_text(chunk_text, parse_mode="Markdown")
+                else:
+                    # Otherwise, use bot directly (callback context)
+                    await update.get_bot().send_message(chat_id=chat_id, text=chunk_text, parse_mode="Markdown")
             except Exception:
-                # If markdown fails (e.g. unclosed tags or too long after formatting), 
-                # try without markdown
                 try:
-                    await update.message.reply_text(chunk_text)
+                    if update.message:
+                        await update.message.reply_text(chunk_text)
+                    else:
+                        await update.get_bot().send_message(chat_id=chat_id, text=chunk_text)
                 except Exception as e:
                     logger.error(f"Failed to send message chunk: {e}")
 

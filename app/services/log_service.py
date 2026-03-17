@@ -1,4 +1,5 @@
 import os
+import re
 from collections import deque
 from app.config import Config
 
@@ -30,8 +31,8 @@ class LogService:
 
     @classmethod
     def get_logs_summary(cls, n_lines: int = 30, filter_level: str = None) -> str:
-        """Get summarized logs, optionally filtered by level."""
-        lines = cls.read_tail(200) # Read more to allow filtering
+        """Get summarized logs, optionally filtered by level with clean formatting."""
+        lines = cls.read_tail(300) 
         if "Log file not found" in lines or "Log file is empty" in lines:
             return lines
 
@@ -43,11 +44,22 @@ class LogService:
             if not line_list:
                 return f"No logs found with level: {level}"
 
-        # Get the tail again after filtering
-        final_lines = line_list[-n_lines:]
-        content = "\n".join(final_lines)
+        # Clean logs for Telegram (Narrow screen)
+        cleaned_lines = []
+        for line in line_list[-n_lines:]:
+            # More robust regex to handle both file and console-like formats
+            # Matches: [YYYY-MM-DD HH:MM:SS] LEVEL LOGGER: MESSAGE or [HH:MM:SS] LEVEL LOGGER MESSAGE
+            match = re.search(r'\[(?:.*?\s)?(\d{2}:\d{2}:\d{2})\]\s+(\w+)\s+([\w\.]+):?\s+(.*)', line)
+            if match:
+                time_str, level, logger_name, msg = match.groups()
+                # Simplified to: HH:MM:SS LEVEL Message
+                line = f"{time_str} {level} {msg}"
+            
+            cleaned_lines.append(line)
+
+        content = "\n".join(cleaned_lines)
         
-        if len(content) > 3800: # Telegram limit 4096
+        if len(content) > 3800:
             content = "..." + content[-3800:]
             
         return content
