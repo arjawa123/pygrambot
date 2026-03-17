@@ -25,6 +25,7 @@ COMMAND_REGISTRY: List[BotCommandInfo] = [
     BotCommandInfo("help", "Lihat bantuan command", "General"),
     BotCommandInfo("ping", "Cek status koneksi", "General"),
     BotCommandInfo("model", "Info model AI aktif", "General"),
+    BotCommandInfo("setmodel", "Ubah provider AI utama", "General", admin_only=True),
     BotCommandInfo("reset", "Hapus riwayat chat", "General"),
     BotCommandInfo("stats", "Statistik penggunaan", "General"),
     

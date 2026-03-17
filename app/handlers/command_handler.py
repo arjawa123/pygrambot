@@ -98,15 +98,17 @@ class CommandHandler:
 
     @staticmethod
     async def handle_callback(update: Update, context: ContextTypes.DEFAULT_TYPE):
-        """Handles inline button clicks for web actions."""
+        """Handles inline button clicks for web and logs actions."""
         query = update.callback_query
         data = query.data
         chat_id = update.effective_chat.id
         user_id = update.effective_user.id
         
-        # Security: Only allow user who initiated the chat (optional, but good)
-        # For now, let's focus on logic
-        
+        # Security: Logs filtering is Admin Only
+        if data.startswith("logs:") and Config.ALLOWED_USER_IDS and user_id not in Config.ALLOWED_USER_IDS:
+            await query.answer("🚫 Akses Ditolak.", show_alert=True)
+            return
+
         web_ctx = context.chat_data.get('web_context')
         if not web_ctx and data.startswith("web:"):
             await query.answer("⚠️ Konteks web sudah kadaluarsa atau dihapus.", show_alert=True)
@@ -114,7 +116,60 @@ class CommandHandler:
 
         await query.answer() # Acknowledge the click
 
-        if data == "web:summary":
+        # --- LOGS FILTERING ---
+        if data.startswith("logs:filter:"):
+            level = data.split(":")[-1]
+            filter_level = None if level == "ALL" else level
+            
+            logs = LogService.get_logs_summary(30, filter_level)
+            header = f"📋 **Filtered Logs: {level}**\n" if filter_level else "📋 **Recent Logs (All)**\n"
+            
+            try:
+                # Use edit_message_text to replace menu with logs
+                await query.edit_message_text(f"{header}```\n{logs}\n```", parse_mode="Markdown")
+                # Add a back button
+                keyboard = [[InlineKeyboardButton("🔙 Back to Menu", callback_data="logs:menu")]]
+                await query.edit_message_reply_markup(reply_markup=InlineKeyboardMarkup(keyboard))
+            except Exception:
+                # Fallback if content is same or other error
+                await query.message.reply_text(f"{header}```\n{logs}\n```", parse_mode="Markdown")
+
+        elif data == "logs:menu":
+            keyboard = [
+                [
+                    InlineKeyboardButton("ℹ️ INFO", callback_data="logs:filter:INFO"),
+                    InlineKeyboardButton("⚠️ WARNING", callback_data="logs:filter:WARNING")
+                ],
+                [
+                    InlineKeyboardButton("❌ ERROR", callback_data="logs:filter:ERROR"),
+                    InlineKeyboardButton("🪲 DEBUG", callback_data="logs:filter:DEBUG")
+                ],
+                [
+                    InlineKeyboardButton("📋 ALL", callback_data="logs:filter:ALL")
+                ]
+            ]
+            await query.edit_message_text(
+                "📋 **Log Viewer Pygram**\nPilih level log:",
+                reply_markup=InlineKeyboardMarkup(keyboard),
+                parse_mode="Markdown"
+            )
+
+        # --- SET MODEL (Admin Only) ---
+        elif data.startswith("setmodel:"):
+            # Re-check admin status for callback security
+            if Config.ALLOWED_USER_IDS and user_id not in Config.ALLOWED_USER_IDS:
+                await query.answer("🚫 Akses Ditolak.", show_alert=True)
+                return
+
+            provider = data.split(":")[-1]
+            await Database.set_setting("active_provider", provider)
+            await query.edit_message_text(
+                f"✅ **Default Model Berhasil Diubah!**\nBot sekarang menggunakan provider: `{provider.upper()}` sebagai prioritas utama.",
+                parse_mode="Markdown"
+            )
+
+        # --- WEB ACTIONS ---
+        elif data == "web:summary":
             status_msg = await query.message.reply_text("⏳ **Meringkas konten...**")
             llm = LLMManager()
             prompt = [
@@ -190,15 +245,36 @@ class CommandHandler:
     @staticmethod
     @admin_only
     async def logs(update: Update, context: ContextTypes.DEFAULT_TYPE):
-        n_lines = 30
-        filter_level = None
         if context.args:
+            n_lines = 30
+            filter_level = None
             if context.args[0].isdigit(): n_lines = int(context.args[0])
             else: filter_level = context.args[0]
-        logs = LogService.get_logs_summary(n_lines, filter_level)
-        header = f"📋 **Recent Logs ({n_lines} lines)**\n"
-        if filter_level: header = f"📋 **Filtered Logs: {filter_level.upper()}**\n"
-        await update.message.reply_text(f"{header}```\n{logs}\n```", parse_mode="Markdown")
+            logs = LogService.get_logs_summary(n_lines, filter_level)
+            header = f"📋 **Recent Logs ({n_lines} lines)**\n"
+            if filter_level: header = f"📋 **Filtered Logs: {filter_level.upper()}**\n"
+            await update.message.reply_text(f"{header}```\n{logs}\n```", parse_mode="Markdown")
+            return
+
+        # No args: Show interactive Menu
+        keyboard = [
+            [
+                InlineKeyboardButton("ℹ️ INFO", callback_data="logs:filter:INFO"),
+                InlineKeyboardButton("⚠️ WARNING", callback_data="logs:filter:WARNING")
+            ],
+            [
+                InlineKeyboardButton("❌ ERROR", callback_data="logs:filter:ERROR"),
+                InlineKeyboardButton("🪲 DEBUG", callback_data="logs:filter:DEBUG")
+            ],
+            [
+                InlineKeyboardButton("📋 ALL (Last 30)", callback_data="logs:filter:ALL")
+            ]
+        ]
+        await update.message.reply_text(
+            "📋 **Log Viewer Pygram**\nPilih level log yang ingin ditampilkan:",
+            reply_markup=InlineKeyboardMarkup(keyboard),
+            parse_mode="Markdown"
+        )
 
     @staticmethod
     @admin_only
@@ -231,8 +307,32 @@ class CommandHandler:
 
     @staticmethod
     async def model(update: Update, context: ContextTypes.DEFAULT_TYPE):
-        text = f"🤖 **AI Model Info**\n• **Primary:** `{Config.PRIMARY_PROVIDER.upper()}` (`{Config.GROQ_MODEL}`)\n• **Fallback:** `OPENROUTER` (`{Config.OPENROUTER_MODEL_FREE}`)"
+        active = await Database.get_setting("active_provider", Config.PRIMARY_PROVIDER)
+        text = (
+            f"🤖 **AI Model Info**\n"
+            f"• **Active Provider:** `{active.upper()}`\n"
+            f"• **Primary (Config):** `{Config.PRIMARY_PROVIDER.upper()}`\n"
+            f"• **Groq Model:** `{Config.GROQ_MODEL}`\n"
+            f"• **OpenRouter Model:** `{Config.OPENROUTER_MODEL_FREE}`"
+        )
         await update.message.reply_text(text, parse_mode="Markdown")
+
+    @staticmethod
+    @admin_only
+    async def setmodel(update: Update, context: ContextTypes.DEFAULT_TYPE):
+        """Shows a menu to change the active LLM provider (Admin Only)."""
+        keyboard = [
+            [
+                InlineKeyboardButton("🚀 Groq (Primary)", callback_data="setmodel:groq"),
+                InlineKeyboardButton("🌐 OpenRouter", callback_data="setmodel:openrouter")
+            ]
+        ]
+        reply_markup = InlineKeyboardMarkup(keyboard)
+        await update.message.reply_text(
+            "⚙️ **Set Default Provider**\nPilih provider utama yang akan digunakan bot:",
+            reply_markup=reply_markup,
+            parse_mode="Markdown"
+        )
 
     @staticmethod
     async def remember(update: Update, context: ContextTypes.DEFAULT_TYPE):

@@ -32,9 +32,10 @@ Saat user mengirim dokumen (`FileHandler.handle_document`):
 ## 4. Security & Permissions
 *   Command sensitif (`/logs`, `/exec`, `/hostinfo`) dilindungi oleh decorator `@admin_only`.
 *   Hanya user ID yang terdaftar di `ALLOWED_USER_IDS` (.env) yang dapat mengeksekusi command tersebut.
+*   **Log Viewer**: Command `/logs` tanpa argumen akan menampilkan menu interaktif (Inline Keyboard) untuk memfilter log berdasarkan level (INFO, WARNING, ERROR, DEBUG).
 
 ## 5. LLM Fallback Mechanism
 `LLMManager` mengatur failover otomatis:
-*   **Primary**: Default Groq (Cepat).
-*   **Fallback**: OpenRouter (Reliable/Gratis).
-*   Jika Primary terkena `429 Rate Limit`, bot otomatis berpindah ke Fallback untuk request tersebut.
+*   **Active Provider**: Diambil dari database `settings` (key: `active_provider`). Jika tidak ada, fallback ke `PRIMARY_PROVIDER` dari .env.
+*   **Fallback**: Jika provider utama gagal (misal: Groq), otomatis berpindah ke provider alternatif (misal: OpenRouter).
+*   **Runtime Config**: Admin dapat mengubah provider utama secara real-time menggunakan command `/setmodel`.

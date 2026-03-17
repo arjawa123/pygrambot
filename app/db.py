@@ -37,6 +37,12 @@ CREATE TABLE IF NOT EXISTS memories (
     created_at TEXT NOT NULL
 );
 
+CREATE TABLE IF NOT EXISTS settings (
+    key TEXT PRIMARY KEY,
+    value TEXT NOT NULL,
+    updated_at TEXT NOT NULL
+);
+
 CREATE INDEX IF NOT EXISTS idx_messages_chat_created ON messages(chat_id, created_at);
 CREATE INDEX IF NOT EXISTS idx_files_chat_created ON files(chat_id, created_at);
 CREATE INDEX IF NOT EXISTS idx_memories_chat ON memories(chat_id);
@@ -160,3 +166,20 @@ class Database:
         async with aiosqlite.connect(Config.DB_PATH) as db:
             await db.execute("DELETE FROM memories WHERE id = ? AND chat_id = ?", (memory_id, chat_id))
             await db.commit()
+
+    # --- Settings ---
+    @staticmethod
+    async def set_setting(key: str, value: str):
+        async with aiosqlite.connect(Config.DB_PATH) as db:
+            await db.execute(
+                "INSERT OR REPLACE INTO settings (key, value, updated_at) VALUES (?, ?, ?)",
+                (key, value, utc_now_iso()),
+            )
+            await db.commit()
+
+    @staticmethod
+    async def get_setting(key: str, default: str = None) -> Optional[str]:
+        async with aiosqlite.connect(Config.DB_PATH) as db:
+            cur = await db.execute("SELECT value FROM settings WHERE key = ?", (key,))
+            row = await cur.fetchone()
+            return row[0] if row else default

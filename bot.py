@@ -49,6 +49,7 @@ def main():
     app.add_handler(TelegramCommandHandler("stats", CommandHandler.stats))
     app.add_handler(TelegramCommandHandler("reset", CommandHandler.reset))
     app.add_handler(TelegramCommandHandler("model", CommandHandler.model))
+    app.add_handler(TelegramCommandHandler("setmodel", CommandHandler.setmodel))
     app.add_handler(TelegramCommandHandler("hostinfo", CommandHandler.hostinfo))
     app.add_handler(TelegramCommandHandler("logs", CommandHandler.logs))
     app.add_handler(TelegramCommandHandler("exec", CommandHandler.exec_cmd))
