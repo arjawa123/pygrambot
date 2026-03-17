@@ -1850,3 +1850,503 @@ telegram.error.TimedOut: Timed out
 [2026-03-17 21:55:48] INFO     httpx: HTTP Request: POST https://api.telegram.org/bot8705414358:AAGGKM09OvsEvb5de48cICeB0rthC3DYfa0/sendMessage "HTTP/1.1 200 OK"
 [2026-03-17 21:55:57] INFO     httpx: HTTP Request: POST https://api.telegram.org/bot8705414358:AAGGKM09OvsEvb5de48cICeB0rthC3DYfa0/getUpdates "HTTP/1.1 200 OK"
 [2026-03-17 21:56:07] INFO     httpx: HTTP Request: POST https://api.telegram.org/bot8705414358:AAGGKM09OvsEvb5de48cICeB0rthC3DYfa0/getUpdates "HTTP/1.1 200 OK"
+[2026-03-18 00:08:31] INFO     pygram: 🚀 Pygram AI Bot is running...
+[2026-03-18 00:08:32] INFO     httpx: HTTP Request: POST https://api.telegram.org/bot8794005734:AAEaT_oKgX9mF2T8D0iT_2br1flpqsMLSi8/getMe "HTTP/1.1 200 OK"
+[2026-03-18 00:08:32] INFO     pygram: Database initialized successfully.
+[2026-03-18 00:08:32] INFO     apscheduler.scheduler: Scheduler started
+[2026-03-18 00:08:32] INFO     app.services.reminder_service: ⏰ Scheduler started.
+[2026-03-18 00:08:32] INFO     httpx: HTTP Request: POST https://api.telegram.org/bot8794005734:AAEaT_oKgX9mF2T8D0iT_2br1flpqsMLSi8/setMyCommands "HTTP/1.1 200 OK"
+[2026-03-18 00:08:32] INFO     app.services.telegram_command_service: Successfully registered 23 commands to Telegram slash menu.
+[2026-03-18 00:08:32] INFO     httpx: HTTP Request: POST https://api.telegram.org/bot8794005734:AAEaT_oKgX9mF2T8D0iT_2br1flpqsMLSi8/deleteWebhook "HTTP/1.1 200 OK"
+[2026-03-18 00:08:32] INFO     apscheduler.scheduler: Scheduler started
+[2026-03-18 00:08:32] INFO     telegram.ext.Application: Application started
+[2026-03-18 00:08:33] INFO     httpx: HTTP Request: POST https://api.telegram.org/bot8794005734:AAEaT_oKgX9mF2T8D0iT_2br1flpqsMLSi8/getUpdates "HTTP/1.1 200 OK"
+[2026-03-18 00:08:34] INFO     httpx: HTTP Request: POST https://api.telegram.org/bot8794005734:AAEaT_oKgX9mF2T8D0iT_2br1flpqsMLSi8/sendMessage "HTTP/1.1 200 OK"
+[2026-03-18 00:08:34] INFO     httpx: HTTP Request: POST https://api.telegram.org/bot8794005734:AAEaT_oKgX9mF2T8D0iT_2br1flpqsMLSi8/sendMessage "HTTP/1.1 200 OK"
+[2026-03-18 00:08:43] INFO     httpx: HTTP Request: POST https://api.telegram.org/bot8794005734:AAEaT_oKgX9mF2T8D0iT_2br1flpqsMLSi8/getUpdates "HTTP/1.1 200 OK"
+[2026-03-18 00:08:53] INFO     httpx: HTTP Request: POST https://api.telegram.org/bot8794005734:AAEaT_oKgX9mF2T8D0iT_2br1flpqsMLSi8/getUpdates "HTTP/1.1 200 OK"
+[2026-03-18 00:09:04] INFO     httpx: HTTP Request: POST https://api.telegram.org/bot8794005734:AAEaT_oKgX9mF2T8D0iT_2br1flpqsMLSi8/getUpdates "HTTP/1.1 200 OK"
+[2026-03-18 00:09:27] INFO     pygram: 🚀 Pygram AI Bot is running...
+[2026-03-18 00:09:28] INFO     httpx: HTTP Request: POST https://api.telegram.org/bot8794005734:AAEaT_oKgX9mF2T8D0iT_2br1flpqsMLSi8/getMe "HTTP/1.1 200 OK"
+[2026-03-18 00:09:28] INFO     pygram: Database initialized successfully.
+[2026-03-18 00:09:28] INFO     apscheduler.scheduler: Scheduler started
+[2026-03-18 00:09:28] INFO     app.services.reminder_service: ⏰ Scheduler started.
+[2026-03-18 00:09:28] INFO     httpx: HTTP Request: POST https://api.telegram.org/bot8794005734:AAEaT_oKgX9mF2T8D0iT_2br1flpqsMLSi8/setMyCommands "HTTP/1.1 200 OK"
+[2026-03-18 00:09:28] INFO     app.services.telegram_command_service: Successfully registered 23 commands to Telegram slash menu.
+[2026-03-18 00:09:29] INFO     httpx: HTTP Request: POST https://api.telegram.org/bot8794005734:AAEaT_oKgX9mF2T8D0iT_2br1flpqsMLSi8/deleteWebhook "HTTP/1.1 200 OK"
+[2026-03-18 00:09:29] INFO     apscheduler.scheduler: Scheduler started
+[2026-03-18 00:09:29] INFO     telegram.ext.Application: Application started
+[2026-03-18 00:09:39] INFO     httpx: HTTP Request: POST https://api.telegram.org/bot8794005734:AAEaT_oKgX9mF2T8D0iT_2br1flpqsMLSi8/getUpdates "HTTP/1.1 200 OK"
+[2026-03-18 00:10:01] INFO     httpx: HTTP Request: POST https://api.telegram.org/bot8794005734:AAEaT_oKgX9mF2T8D0iT_2br1flpqsMLSi8/getUpdates "HTTP/1.1 200 OK"
+[2026-03-18 00:10:02] INFO     httpx: HTTP Request: POST https://api.telegram.org/bot8794005734:AAEaT_oKgX9mF2T8D0iT_2br1flpqsMLSi8/sendMessage "HTTP/1.1 200 OK"
+[2026-03-18 00:10:08] INFO     httpx: HTTP Request: POST https://api.telegram.org/bot8794005734:AAEaT_oKgX9mF2T8D0iT_2br1flpqsMLSi8/getUpdates "HTTP/1.1 200 OK"
+[2026-03-18 00:10:09] INFO     httpx: HTTP Request: POST https://api.telegram.org/bot8794005734:AAEaT_oKgX9mF2T8D0iT_2br1flpqsMLSi8/sendMessage "HTTP/1.1 200 OK"
+[2026-03-18 00:10:11] INFO     httpx: HTTP Request: POST https://api.telegram.org/bot8794005734:AAEaT_oKgX9mF2T8D0iT_2br1flpqsMLSi8/getUpdates "HTTP/1.1 200 OK"
+[2026-03-18 00:10:12] INFO     httpx: HTTP Request: POST https://api.telegram.org/bot8794005734:AAEaT_oKgX9mF2T8D0iT_2br1flpqsMLSi8/sendMessage "HTTP/1.1 200 OK"
+[2026-03-18 00:10:22] INFO     httpx: HTTP Request: POST https://api.telegram.org/bot8794005734:AAEaT_oKgX9mF2T8D0iT_2br1flpqsMLSi8/getUpdates "HTTP/1.1 200 OK"
+[2026-03-18 00:10:32] INFO     httpx: HTTP Request: POST https://api.telegram.org/bot8794005734:AAEaT_oKgX9mF2T8D0iT_2br1flpqsMLSi8/getUpdates "HTTP/1.1 200 OK"
+[2026-03-18 00:10:43] INFO     httpx: HTTP Request: POST https://api.telegram.org/bot8794005734:AAEaT_oKgX9mF2T8D0iT_2br1flpqsMLSi8/getUpdates "HTTP/1.1 200 OK"
+[2026-03-18 00:10:53] INFO     httpx: HTTP Request: POST https://api.telegram.org/bot8794005734:AAEaT_oKgX9mF2T8D0iT_2br1flpqsMLSi8/getUpdates "HTTP/1.1 200 OK"
+[2026-03-18 00:11:03] INFO     httpx: HTTP Request: POST https://api.telegram.org/bot8794005734:AAEaT_oKgX9mF2T8D0iT_2br1flpqsMLSi8/getUpdates "HTTP/1.1 200 OK"
+[2026-03-18 00:11:14] INFO     httpx: HTTP Request: POST https://api.telegram.org/bot8794005734:AAEaT_oKgX9mF2T8D0iT_2br1flpqsMLSi8/getUpdates "HTTP/1.1 200 OK"
+[2026-03-18 00:11:24] INFO     httpx: HTTP Request: POST https://api.telegram.org/bot8794005734:AAEaT_oKgX9mF2T8D0iT_2br1flpqsMLSi8/getUpdates "HTTP/1.1 200 OK"
+[2026-03-18 00:11:34] INFO     httpx: HTTP Request: POST https://api.telegram.org/bot8794005734:AAEaT_oKgX9mF2T8D0iT_2br1flpqsMLSi8/getUpdates "HTTP/1.1 200 OK"
+[2026-03-18 00:11:45] INFO     httpx: HTTP Request: POST https://api.telegram.org/bot8794005734:AAEaT_oKgX9mF2T8D0iT_2br1flpqsMLSi8/getUpdates "HTTP/1.1 200 OK"
+[2026-03-18 00:11:55] INFO     httpx: HTTP Request: POST https://api.telegram.org/bot8794005734:AAEaT_oKgX9mF2T8D0iT_2br1flpqsMLSi8/getUpdates "HTTP/1.1 200 OK"
+[2026-03-18 00:12:05] INFO     httpx: HTTP Request: POST https://api.telegram.org/bot8794005734:AAEaT_oKgX9mF2T8D0iT_2br1flpqsMLSi8/getUpdates "HTTP/1.1 200 OK"
+[2026-03-18 00:12:16] INFO     httpx: HTTP Request: POST https://api.telegram.org/bot8794005734:AAEaT_oKgX9mF2T8D0iT_2br1flpqsMLSi8/getUpdates "HTTP/1.1 200 OK"
+[2026-03-18 00:12:26] INFO     httpx: HTTP Request: POST https://api.telegram.org/bot8794005734:AAEaT_oKgX9mF2T8D0iT_2br1flpqsMLSi8/getUpdates "HTTP/1.1 200 OK"
+[2026-03-18 00:13:42] INFO     httpx: HTTP Request: POST https://api.telegram.org/bot8794005734:AAEaT_oKgX9mF2T8D0iT_2br1flpqsMLSi8/getUpdates "HTTP/1.1 200 OK"
+[2026-03-18 00:13:52] INFO     httpx: HTTP Request: POST https://api.telegram.org/bot8794005734:AAEaT_oKgX9mF2T8D0iT_2br1flpqsMLSi8/getUpdates "HTTP/1.1 200 OK"
+[2026-03-18 00:14:03] ERROR    pygram: Exception while handling an update:
+Traceback (most recent call last):
+  File "/data/data/com.termux/files/home/bot/pygrambot/.venv/lib/python3.13/site-packages/httpx/_transports/default.py", line 101, in map_httpcore_exceptions
+    yield
+  File "/data/data/com.termux/files/home/bot/pygrambot/.venv/lib/python3.13/site-packages/httpx/_transports/default.py", line 394, in handle_async_request
+    resp = await self._pool.handle_async_request(req)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/data/com.termux/files/home/bot/pygrambot/.venv/lib/python3.13/site-packages/httpcore/_async/connection_pool.py", line 256, in handle_async_request
+    raise exc from None
+  File "/data/data/com.termux/files/home/bot/pygrambot/.venv/lib/python3.13/site-packages/httpcore/_async/connection_pool.py", line 236, in handle_async_request
+    response = await connection.handle_async_request(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        pool_request.request
+        ^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/data/data/com.termux/files/home/bot/pygrambot/.venv/lib/python3.13/site-packages/httpcore/_async/connection.py", line 103, in handle_async_request
+    return await self._connection.handle_async_request(request)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/data/com.termux/files/home/bot/pygrambot/.venv/lib/python3.13/site-packages/httpcore/_async/http11.py", line 136, in handle_async_request
+    raise exc
+  File "/data/data/com.termux/files/home/bot/pygrambot/.venv/lib/python3.13/site-packages/httpcore/_async/http11.py", line 106, in handle_async_request
+    ) = await self._receive_response_headers(**kwargs)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/data/com.termux/files/home/bot/pygrambot/.venv/lib/python3.13/site-packages/httpcore/_async/http11.py", line 177, in _receive_response_headers
+    event = await self._receive_event(timeout=timeout)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/data/com.termux/files/home/bot/pygrambot/.venv/lib/python3.13/site-packages/httpcore/_async/http11.py", line 217, in _receive_event
+    data = await self._network_stream.read(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        self.READ_NUM_BYTES, timeout=timeout
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/data/data/com.termux/files/home/bot/pygrambot/.venv/lib/python3.13/site-packages/httpcore/_backends/anyio.py", line 32, in read
+    with map_exceptions(exc_map):
+         ~~~~~~~~~~~~~~^^^^^^^^^
+  File "/data/data/com.termux/files/usr/lib/python3.13/contextlib.py", line 162, in __exit__
+    self.gen.throw(value)
+    ~~~~~~~~~~~~~~^^^^^^^
+  File "/data/data/com.termux/files/home/bot/pygrambot/.venv/lib/python3.13/site-packages/httpcore/_exceptions.py", line 14, in map_exceptions
+    raise to_exc(exc) from exc
+httpcore.ReadError
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/data/data/com.termux/files/home/bot/pygrambot/.venv/lib/python3.13/site-packages/telegram/request/_httpxrequest.py", line 279, in do_request
+    res = await self._client.request(
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<6 lines>...
+    )
+    ^
+  File "/data/data/com.termux/files/home/bot/pygrambot/.venv/lib/python3.13/site-packages/httpx/_client.py", line 1540, in request
+    return await self.send(request, auth=auth, follow_redirects=follow_redirects)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/data/com.termux/files/home/bot/pygrambot/.venv/lib/python3.13/site-packages/httpx/_client.py", line 1629, in send
+    response = await self._send_handling_auth(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<4 lines>...
+    )
+    ^
+  File "/data/data/com.termux/files/home/bot/pygrambot/.venv/lib/python3.13/site-packages/httpx/_client.py", line 1657, in _send_handling_auth
+    response = await self._send_handling_redirects(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+    )
+    ^
+  File "/data/data/com.termux/files/home/bot/pygrambot/.venv/lib/python3.13/site-packages/httpx/_client.py", line 1694, in _send_handling_redirects
+    response = await self._send_single_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/data/com.termux/files/home/bot/pygrambot/.venv/lib/python3.13/site-packages/httpx/_client.py", line 1730, in _send_single_request
+    response = await transport.handle_async_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/data/com.termux/files/home/bot/pygrambot/.venv/lib/python3.13/site-packages/httpx/_transports/default.py", line 393, in handle_async_request
+    with map_httpcore_exceptions():
+         ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/data/data/com.termux/files/usr/lib/python3.13/contextlib.py", line 162, in __exit__
+    self.gen.throw(value)
+    ~~~~~~~~~~~~~~^^^^^^^
+  File "/data/data/com.termux/files/home/bot/pygrambot/.venv/lib/python3.13/site-packages/httpx/_transports/default.py", line 118, in map_httpcore_exceptions
+    raise mapped_exc(message) from exc
+httpx.ReadError
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/data/data/com.termux/files/home/bot/pygrambot/.venv/lib/python3.13/site-packages/telegram/ext/_utils/networkloop.py", line 161, in network_retry_loop
+    await do_action()
+  File "/data/data/com.termux/files/home/bot/pygrambot/.venv/lib/python3.13/site-packages/telegram/ext/_utils/networkloop.py", line 154, in do_action
+    action_cb_task.result()
+    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "/data/data/com.termux/files/home/bot/pygrambot/.venv/lib/python3.13/site-packages/telegram/ext/_updater.py", line 340, in polling_action_cb
+    updates = await self.bot.get_updates(
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+    )
+    ^
+  File "/data/data/com.termux/files/home/bot/pygrambot/.venv/lib/python3.13/site-packages/telegram/ext/_extbot.py", line 672, in get_updates
+    updates = await super().get_updates(
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<9 lines>...
+    )
+    ^
+  File "/data/data/com.termux/files/home/bot/pygrambot/.venv/lib/python3.13/site-packages/telegram/_bot.py", line 4865, in get_updates
+    await self._post(
+    ^^^^^^^^^^^^^^^^^
+    ...<7 lines>...
+    ),
+    ^
+  File "/data/data/com.termux/files/home/bot/pygrambot/.venv/lib/python3.13/site-packages/telegram/_bot.py", line 704, in _post
+    return await self._do_post(
+           ^^^^^^^^^^^^^^^^^^^^
+    ...<6 lines>...
+    )
+    ^
+  File "/data/data/com.termux/files/home/bot/pygrambot/.venv/lib/python3.13/site-packages/telegram/ext/_extbot.py", line 370, in _do_post
+    return await super()._do_post(
+           ^^^^^^^^^^^^^^^^^^^^^^^
+    ...<6 lines>...
+    )
+    ^
+  File "/data/data/com.termux/files/home/bot/pygrambot/.venv/lib/python3.13/site-packages/telegram/_bot.py", line 733, in _do_post
+    result = await request.post(
+             ^^^^^^^^^^^^^^^^^^^
+    ...<6 lines>...
+    )
+    ^
+  File "/data/data/com.termux/files/home/bot/pygrambot/.venv/lib/python3.13/site-packages/telegram/request/_baserequest.py", line 198, in post
+    result = await self._request_wrapper(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<7 lines>...
+    )
+    ^
+  File "/data/data/com.termux/files/home/bot/pygrambot/.venv/lib/python3.13/site-packages/telegram/request/_baserequest.py", line 305, in _request_wrapper
+    code, payload = await self.do_request(
+                    ^^^^^^^^^^^^^^^^^^^^^^
+    ...<7 lines>...
+    )
+    ^
+  File "/data/data/com.termux/files/home/bot/pygrambot/.venv/lib/python3.13/site-packages/telegram/request/_httpxrequest.py", line 303, in do_request
+    raise NetworkError(f"httpx.{err.__class__.__name__}: {err}") from err
+telegram.error.NetworkError: httpx.ReadError: 
+[2026-03-18 00:14:15] INFO     httpx: HTTP Request: POST https://api.telegram.org/bot8794005734:AAEaT_oKgX9mF2T8D0iT_2br1flpqsMLSi8/getUpdates "HTTP/1.1 200 OK"
+[2026-03-18 00:14:25] INFO     httpx: HTTP Request: POST https://api.telegram.org/bot8794005734:AAEaT_oKgX9mF2T8D0iT_2br1flpqsMLSi8/getUpdates "HTTP/1.1 200 OK"
+[2026-03-18 00:14:26] ERROR    pygram: Exception while handling an update:
+Traceback (most recent call last):
+  File "/data/data/com.termux/files/home/bot/pygrambot/.venv/lib/python3.13/site-packages/httpx/_transports/default.py", line 101, in map_httpcore_exceptions
+    yield
+  File "/data/data/com.termux/files/home/bot/pygrambot/.venv/lib/python3.13/site-packages/httpx/_transports/default.py", line 394, in handle_async_request
+    resp = await self._pool.handle_async_request(req)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/data/com.termux/files/home/bot/pygrambot/.venv/lib/python3.13/site-packages/httpcore/_async/connection_pool.py", line 256, in handle_async_request
+    raise exc from None
+  File "/data/data/com.termux/files/home/bot/pygrambot/.venv/lib/python3.13/site-packages/httpcore/_async/connection_pool.py", line 236, in handle_async_request
+    response = await connection.handle_async_request(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        pool_request.request
+        ^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/data/data/com.termux/files/home/bot/pygrambot/.venv/lib/python3.13/site-packages/httpcore/_async/connection.py", line 103, in handle_async_request
+    return await self._connection.handle_async_request(request)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/data/com.termux/files/home/bot/pygrambot/.venv/lib/python3.13/site-packages/httpcore/_async/http11.py", line 136, in handle_async_request
+    raise exc
+  File "/data/data/com.termux/files/home/bot/pygrambot/.venv/lib/python3.13/site-packages/httpcore/_async/http11.py", line 106, in handle_async_request
+    ) = await self._receive_response_headers(**kwargs)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/data/com.termux/files/home/bot/pygrambot/.venv/lib/python3.13/site-packages/httpcore/_async/http11.py", line 177, in _receive_response_headers
+    event = await self._receive_event(timeout=timeout)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/data/com.termux/files/home/bot/pygrambot/.venv/lib/python3.13/site-packages/httpcore/_async/http11.py", line 217, in _receive_event
+    data = await self._network_stream.read(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        self.READ_NUM_BYTES, timeout=timeout
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/data/data/com.termux/files/home/bot/pygrambot/.venv/lib/python3.13/site-packages/httpcore/_backends/anyio.py", line 32, in read
+    with map_exceptions(exc_map):
+         ~~~~~~~~~~~~~~^^^^^^^^^
+  File "/data/data/com.termux/files/usr/lib/python3.13/contextlib.py", line 162, in __exit__
+    self.gen.throw(value)
+    ~~~~~~~~~~~~~~^^^^^^^
+  File "/data/data/com.termux/files/home/bot/pygrambot/.venv/lib/python3.13/site-packages/httpcore/_exceptions.py", line 14, in map_exceptions
+    raise to_exc(exc) from exc
+httpcore.ReadError
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/data/data/com.termux/files/home/bot/pygrambot/.venv/lib/python3.13/site-packages/telegram/request/_httpxrequest.py", line 279, in do_request
+    res = await self._client.request(
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<6 lines>...
+    )
+    ^
+  File "/data/data/com.termux/files/home/bot/pygrambot/.venv/lib/python3.13/site-packages/httpx/_client.py", line 1540, in request
+    return await self.send(request, auth=auth, follow_redirects=follow_redirects)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/data/com.termux/files/home/bot/pygrambot/.venv/lib/python3.13/site-packages/httpx/_client.py", line 1629, in send
+    response = await self._send_handling_auth(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<4 lines>...
+    )
+    ^
+  File "/data/data/com.termux/files/home/bot/pygrambot/.venv/lib/python3.13/site-packages/httpx/_client.py", line 1657, in _send_handling_auth
+    response = await self._send_handling_redirects(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+    )
+    ^
+  File "/data/data/com.termux/files/home/bot/pygrambot/.venv/lib/python3.13/site-packages/httpx/_client.py", line 1694, in _send_handling_redirects
+    response = await self._send_single_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/data/com.termux/files/home/bot/pygrambot/.venv/lib/python3.13/site-packages/httpx/_client.py", line 1730, in _send_single_request
+    response = await transport.handle_async_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/data/com.termux/files/home/bot/pygrambot/.venv/lib/python3.13/site-packages/httpx/_transports/default.py", line 393, in handle_async_request
+    with map_httpcore_exceptions():
+         ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/data/data/com.termux/files/usr/lib/python3.13/contextlib.py", line 162, in __exit__
+    self.gen.throw(value)
+    ~~~~~~~~~~~~~~^^^^^^^
+  File "/data/data/com.termux/files/home/bot/pygrambot/.venv/lib/python3.13/site-packages/httpx/_transports/default.py", line 118, in map_httpcore_exceptions
+    raise mapped_exc(message) from exc
+httpx.ReadError
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/data/data/com.termux/files/home/bot/pygrambot/.venv/lib/python3.13/site-packages/telegram/ext/_utils/networkloop.py", line 161, in network_retry_loop
+    await do_action()
+  File "/data/data/com.termux/files/home/bot/pygrambot/.venv/lib/python3.13/site-packages/telegram/ext/_utils/networkloop.py", line 154, in do_action
+    action_cb_task.result()
+    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "/data/data/com.termux/files/home/bot/pygrambot/.venv/lib/python3.13/site-packages/telegram/ext/_updater.py", line 340, in polling_action_cb
+    updates = await self.bot.get_updates(
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+    )
+    ^
+  File "/data/data/com.termux/files/home/bot/pygrambot/.venv/lib/python3.13/site-packages/telegram/ext/_extbot.py", line 672, in get_updates
+    updates = await super().get_updates(
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<9 lines>...
+    )
+    ^
+  File "/data/data/com.termux/files/home/bot/pygrambot/.venv/lib/python3.13/site-packages/telegram/_bot.py", line 4865, in get_updates
+    await self._post(
+    ^^^^^^^^^^^^^^^^^
+    ...<7 lines>...
+    ),
+    ^
+  File "/data/data/com.termux/files/home/bot/pygrambot/.venv/lib/python3.13/site-packages/telegram/_bot.py", line 704, in _post
+    return await self._do_post(
+           ^^^^^^^^^^^^^^^^^^^^
+    ...<6 lines>...
+    )
+    ^
+  File "/data/data/com.termux/files/home/bot/pygrambot/.venv/lib/python3.13/site-packages/telegram/ext/_extbot.py", line 370, in _do_post
+    return await super()._do_post(
+           ^^^^^^^^^^^^^^^^^^^^^^^
+    ...<6 lines>...
+    )
+    ^
+  File "/data/data/com.termux/files/home/bot/pygrambot/.venv/lib/python3.13/site-packages/telegram/_bot.py", line 733, in _do_post
+    result = await request.post(
+             ^^^^^^^^^^^^^^^^^^^
+    ...<6 lines>...
+    )
+    ^
+  File "/data/data/com.termux/files/home/bot/pygrambot/.venv/lib/python3.13/site-packages/telegram/request/_baserequest.py", line 198, in post
+    result = await self._request_wrapper(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<7 lines>...
+    )
+    ^
+  File "/data/data/com.termux/files/home/bot/pygrambot/.venv/lib/python3.13/site-packages/telegram/request/_baserequest.py", line 305, in _request_wrapper
+    code, payload = await self.do_request(
+                    ^^^^^^^^^^^^^^^^^^^^^^
+    ...<7 lines>...
+    )
+    ^
+  File "/data/data/com.termux/files/home/bot/pygrambot/.venv/lib/python3.13/site-packages/telegram/request/_httpxrequest.py", line 303, in do_request
+    raise NetworkError(f"httpx.{err.__class__.__name__}: {err}") from err
+telegram.error.NetworkError: httpx.ReadError: 
+[2026-03-18 00:14:41] INFO     httpx: HTTP Request: POST https://api.telegram.org/bot8794005734:AAEaT_oKgX9mF2T8D0iT_2br1flpqsMLSi8/getUpdates "HTTP/1.1 200 OK"
+[2026-03-18 00:14:51] INFO     httpx: HTTP Request: POST https://api.telegram.org/bot8794005734:AAEaT_oKgX9mF2T8D0iT_2br1flpqsMLSi8/getUpdates "HTTP/1.1 200 OK"
+[2026-03-18 00:15:01] INFO     httpx: HTTP Request: POST https://api.telegram.org/bot8794005734:AAEaT_oKgX9mF2T8D0iT_2br1flpqsMLSi8/getUpdates "HTTP/1.1 200 OK"
+[2026-03-18 00:15:11] INFO     httpx: HTTP Request: POST https://api.telegram.org/bot8794005734:AAEaT_oKgX9mF2T8D0iT_2br1flpqsMLSi8/getUpdates "HTTP/1.1 200 OK"
+[2026-03-18 00:15:13] ERROR    pygram: Exception while handling an update:
+Traceback (most recent call last):
+  File "/data/data/com.termux/files/home/bot/pygrambot/.venv/lib/python3.13/site-packages/httpx/_transports/default.py", line 101, in map_httpcore_exceptions
+    yield
+  File "/data/data/com.termux/files/home/bot/pygrambot/.venv/lib/python3.13/site-packages/httpx/_transports/default.py", line 394, in handle_async_request
+    resp = await self._pool.handle_async_request(req)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/data/com.termux/files/home/bot/pygrambot/.venv/lib/python3.13/site-packages/httpcore/_async/connection_pool.py", line 256, in handle_async_request
+    raise exc from None
+  File "/data/data/com.termux/files/home/bot/pygrambot/.venv/lib/python3.13/site-packages/httpcore/_async/connection_pool.py", line 236, in handle_async_request
+    response = await connection.handle_async_request(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        pool_request.request
+        ^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/data/data/com.termux/files/home/bot/pygrambot/.venv/lib/python3.13/site-packages/httpcore/_async/connection.py", line 103, in handle_async_request
+    return await self._connection.handle_async_request(request)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/data/com.termux/files/home/bot/pygrambot/.venv/lib/python3.13/site-packages/httpcore/_async/http11.py", line 136, in handle_async_request
+    raise exc
+  File "/data/data/com.termux/files/home/bot/pygrambot/.venv/lib/python3.13/site-packages/httpcore/_async/http11.py", line 106, in handle_async_request
+    ) = await self._receive_response_headers(**kwargs)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/data/com.termux/files/home/bot/pygrambot/.venv/lib/python3.13/site-packages/httpcore/_async/http11.py", line 177, in _receive_response_headers
+    event = await self._receive_event(timeout=timeout)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/data/com.termux/files/home/bot/pygrambot/.venv/lib/python3.13/site-packages/httpcore/_async/http11.py", line 217, in _receive_event
+    data = await self._network_stream.read(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        self.READ_NUM_BYTES, timeout=timeout
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/data/data/com.termux/files/home/bot/pygrambot/.venv/lib/python3.13/site-packages/httpcore/_backends/anyio.py", line 32, in read
+    with map_exceptions(exc_map):
+         ~~~~~~~~~~~~~~^^^^^^^^^
+  File "/data/data/com.termux/files/usr/lib/python3.13/contextlib.py", line 162, in __exit__
+    self.gen.throw(value)
+    ~~~~~~~~~~~~~~^^^^^^^
+  File "/data/data/com.termux/files/home/bot/pygrambot/.venv/lib/python3.13/site-packages/httpcore/_exceptions.py", line 14, in map_exceptions
+    raise to_exc(exc) from exc
+httpcore.ReadError
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/data/data/com.termux/files/home/bot/pygrambot/.venv/lib/python3.13/site-packages/telegram/request/_httpxrequest.py", line 279, in do_request
+    res = await self._client.request(
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<6 lines>...
+    )
+    ^
+  File "/data/data/com.termux/files/home/bot/pygrambot/.venv/lib/python3.13/site-packages/httpx/_client.py", line 1540, in request
+    return await self.send(request, auth=auth, follow_redirects=follow_redirects)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/data/com.termux/files/home/bot/pygrambot/.venv/lib/python3.13/site-packages/httpx/_client.py", line 1629, in send
+    response = await self._send_handling_auth(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<4 lines>...
+    )
+    ^
+  File "/data/data/com.termux/files/home/bot/pygrambot/.venv/lib/python3.13/site-packages/httpx/_client.py", line 1657, in _send_handling_auth
+    response = await self._send_handling_redirects(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+    )
+    ^
+  File "/data/data/com.termux/files/home/bot/pygrambot/.venv/lib/python3.13/site-packages/httpx/_client.py", line 1694, in _send_handling_redirects
+    response = await self._send_single_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/data/com.termux/files/home/bot/pygrambot/.venv/lib/python3.13/site-packages/httpx/_client.py", line 1730, in _send_single_request
+    response = await transport.handle_async_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/data/com.termux/files/home/bot/pygrambot/.venv/lib/python3.13/site-packages/httpx/_transports/default.py", line 393, in handle_async_request
+    with map_httpcore_exceptions():
+         ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/data/data/com.termux/files/usr/lib/python3.13/contextlib.py", line 162, in __exit__
+    self.gen.throw(value)
+    ~~~~~~~~~~~~~~^^^^^^^
+  File "/data/data/com.termux/files/home/bot/pygrambot/.venv/lib/python3.13/site-packages/httpx/_transports/default.py", line 118, in map_httpcore_exceptions
+    raise mapped_exc(message) from exc
+httpx.ReadError
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/data/data/com.termux/files/home/bot/pygrambot/.venv/lib/python3.13/site-packages/telegram/ext/_utils/networkloop.py", line 161, in network_retry_loop
+    await do_action()
+  File "/data/data/com.termux/files/home/bot/pygrambot/.venv/lib/python3.13/site-packages/telegram/ext/_utils/networkloop.py", line 154, in do_action
+    action_cb_task.result()
+    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "/data/data/com.termux/files/home/bot/pygrambot/.venv/lib/python3.13/site-packages/telegram/ext/_updater.py", line 340, in polling_action_cb
+    updates = await self.bot.get_updates(
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+    )
+    ^
+  File "/data/data/com.termux/files/home/bot/pygrambot/.venv/lib/python3.13/site-packages/telegram/ext/_extbot.py", line 672, in get_updates
+    updates = await super().get_updates(
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<9 lines>...
+    )
+    ^
+  File "/data/data/com.termux/files/home/bot/pygrambot/.venv/lib/python3.13/site-packages/telegram/_bot.py", line 4865, in get_updates
+    await self._post(
+    ^^^^^^^^^^^^^^^^^
+    ...<7 lines>...
+    ),
+    ^
+  File "/data/data/com.termux/files/home/bot/pygrambot/.venv/lib/python3.13/site-packages/telegram/_bot.py", line 704, in _post
+    return await self._do_post(
+           ^^^^^^^^^^^^^^^^^^^^
+    ...<6 lines>...
+    )
+    ^
+  File "/data/data/com.termux/files/home/bot/pygrambot/.venv/lib/python3.13/site-packages/telegram/ext/_extbot.py", line 370, in _do_post
+    return await super()._do_post(
+           ^^^^^^^^^^^^^^^^^^^^^^^
+    ...<6 lines>...
+    )
+    ^
+  File "/data/data/com.termux/files/home/bot/pygrambot/.venv/lib/python3.13/site-packages/telegram/_bot.py", line 733, in _do_post
+    result = await request.post(
+             ^^^^^^^^^^^^^^^^^^^
+    ...<6 lines>...
+    )
+    ^
+  File "/data/data/com.termux/files/home/bot/pygrambot/.venv/lib/python3.13/site-packages/telegram/request/_baserequest.py", line 198, in post
+    result = await self._request_wrapper(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<7 lines>...
+    )
+    ^
+  File "/data/data/com.termux/files/home/bot/pygrambot/.venv/lib/python3.13/site-packages/telegram/request/_baserequest.py", line 305, in _request_wrapper
+    code, payload = await self.do_request(
+                    ^^^^^^^^^^^^^^^^^^^^^^
+    ...<7 lines>...
+    )
+    ^
+  File "/data/data/com.termux/files/home/bot/pygrambot/.venv/lib/python3.13/site-packages/telegram/request/_httpxrequest.py", line 303, in do_request
+    raise NetworkError(f"httpx.{err.__class__.__name__}: {err}") from err
+telegram.error.NetworkError: httpx.ReadError: 
+[2026-03-18 00:19:29] INFO     pygram: 🚀 Pygram AI Bot is running...
+[2026-03-18 00:19:29] INFO     httpx: HTTP Request: POST https://api.telegram.org/bot8794005734:AAEaT_oKgX9mF2T8D0iT_2br1flpqsMLSi8/getMe "HTTP/1.1 200 OK"
+[2026-03-18 00:19:29] INFO     pygram: Database initialized successfully.
+[2026-03-18 00:19:29] INFO     apscheduler.scheduler: Scheduler started
+[2026-03-18 00:19:29] INFO     app.services.reminder_service: ⏰ Scheduler started.
+[2026-03-18 00:19:30] INFO     httpx: HTTP Request: POST https://api.telegram.org/bot8794005734:AAEaT_oKgX9mF2T8D0iT_2br1flpqsMLSi8/setMyCommands "HTTP/1.1 200 OK"
+[2026-03-18 00:19:30] INFO     app.services.telegram_command_service: Successfully registered 23 commands to Telegram slash menu.
+[2026-03-18 00:19:30] INFO     httpx: HTTP Request: POST https://api.telegram.org/bot8794005734:AAEaT_oKgX9mF2T8D0iT_2br1flpqsMLSi8/deleteWebhook "HTTP/1.1 200 OK"
+[2026-03-18 00:19:30] INFO     apscheduler.scheduler: Scheduler started
+[2026-03-18 00:19:30] INFO     telegram.ext.Application: Application started
+[2026-03-18 00:19:41] INFO     httpx: HTTP Request: POST https://api.telegram.org/bot8794005734:AAEaT_oKgX9mF2T8D0iT_2br1flpqsMLSi8/getUpdates "HTTP/1.1 200 OK"
+[2026-03-18 00:19:43] INFO     httpx: HTTP Request: POST https://api.telegram.org/bot8794005734:AAEaT_oKgX9mF2T8D0iT_2br1flpqsMLSi8/getUpdates "HTTP/1.1 200 OK"
+[2026-03-18 00:19:44] INFO     httpx: HTTP Request: POST https://api.telegram.org/bot8794005734:AAEaT_oKgX9mF2T8D0iT_2br1flpqsMLSi8/sendMessage "HTTP/1.1 200 OK"
+[2026-03-18 00:19:53] INFO     httpx: HTTP Request: POST https://api.telegram.org/bot8794005734:AAEaT_oKgX9mF2T8D0iT_2br1flpqsMLSi8/getUpdates "HTTP/1.1 200 OK"
+[2026-03-18 00:20:03] INFO     httpx: HTTP Request: POST https://api.telegram.org/bot8794005734:AAEaT_oKgX9mF2T8D0iT_2br1flpqsMLSi8/getUpdates "HTTP/1.1 200 OK"
+[2026-03-18 00:20:14] INFO     httpx: HTTP Request: POST https://api.telegram.org/bot8794005734:AAEaT_oKgX9mF2T8D0iT_2br1flpqsMLSi8/getUpdates "HTTP/1.1 200 OK"
+[2026-03-18 00:20:24] INFO     httpx: HTTP Request: POST https://api.telegram.org/bot8794005734:AAEaT_oKgX9mF2T8D0iT_2br1flpqsMLSi8/getUpdates "HTTP/1.1 200 OK"
