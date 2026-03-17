@@ -1,5 +1,4 @@
 import asyncio
-import logging
 from telegram.ext import (
     ApplicationBuilder,
     CommandHandler as TelegramCommandHandler,
@@ -11,13 +10,12 @@ from app.db import init_db
 from app.handlers.command_handler import CommandHandler
 from app.handlers.chat_handler import ChatHandler
 from app.handlers.file_handler import FileHandler
+from app.utils.logging_setup import setup_logging, get_logger
+from app.services.telegram_command_service import setup_bot_commands
 
-# Logging Setup
-logging.basicConfig(
-    level=logging.INFO,
-    format="%(asctime)s | %(levelname)s | %(name)s | %(message)s",
-)
-logger = logging.getLogger("pygram")
+# 0. Initialize Logging
+setup_logging()
+logger = get_logger("pygram")
 
 def main():
     # 1. Validate Config
@@ -34,6 +32,9 @@ def main():
     async def post_init(application):
         await init_db()
         logger.info("Database initialized successfully.")
+        
+        # Register Telegram Slash Commands
+        await setup_bot_commands(application)
 
     app.post_init = post_init
     
@@ -48,6 +49,8 @@ def main():
     app.add_handler(TelegramCommandHandler("reset", CommandHandler.reset))
     app.add_handler(TelegramCommandHandler("model", CommandHandler.model))
     app.add_handler(TelegramCommandHandler("hostinfo", CommandHandler.hostinfo))
+    app.add_handler(TelegramCommandHandler("logs", CommandHandler.logs))
+    app.add_handler(TelegramCommandHandler("exec", CommandHandler.exec_cmd))
     
     # Memory Commands
     app.add_handler(TelegramCommandHandler("remember", CommandHandler.remember))

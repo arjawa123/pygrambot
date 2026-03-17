@@ -1,4 +1,5 @@
 import os
+import time
 from pathlib import Path
 from dotenv import load_dotenv
 
@@ -15,6 +16,18 @@ class Config:
     DB_PATH = os.getenv("BOT_DB_PATH", "bot.db").strip()
     FILES_DIR = Path(os.getenv("BOT_FILES_DIR", "bot_files").strip())
     FILES_DIR.mkdir(parents=True, exist_ok=True)
+    
+    # Logging Configuration
+    LOG_LEVEL = os.getenv("LOG_LEVEL", "INFO").upper()
+    LOG_FILE_PATH = os.getenv("LOG_FILE_PATH", "logs/bot.log").strip()
+    LOG_TO_STDOUT = os.getenv("LOG_TO_STDOUT", "true").lower() == "true"
+    
+    # Create logs directory if it doesn't exist
+    log_dir = Path(LOG_FILE_PATH).parent
+    log_dir.mkdir(parents=True, exist_ok=True)
+
+    # Runtime Info
+    BOT_START_TIME = time.time()
 
     # LLM Providers
     PRIMARY_PROVIDER = os.getenv("PRIMARY_PROVIDER", "groq").lower()
