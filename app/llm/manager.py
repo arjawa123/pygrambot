@@ -41,14 +41,14 @@ class LLMManager:
             # Try primary
             logger.info(f"Using active provider: {active_provider}")
             return await primary.chat_completion(messages)
-        except RateLimitError:
-            logger.warning(f"Provider '{active_provider}' rate limited. Falling back to '{fallback_name}'...")
+        except (RateLimitError, LLMError) as e:
+            logger.warning(f"Provider '{active_provider}' failed ({e}). Falling back to '{fallback_name}'...")
             try:
                 # Fallback
                 return await fallback.chat_completion(messages)
-            except Exception as e:
-                logger.error(f"Fallback provider '{fallback_name}' also failed: {e}")
-                raise LLMError(f"Both providers failed. Last error: {str(e)}")
+            except Exception as fe:
+                logger.error(f"Fallback provider '{fallback_name}' also failed: {fe}")
+                raise LLMError(f"Both providers failed. Last error: {str(fe)}")
         except Exception as e:
             logger.error(f"Provider fatal error: {e}")
             raise e

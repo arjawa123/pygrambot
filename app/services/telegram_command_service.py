@@ -19,7 +19,7 @@ async def setup_bot_commands(application: Application):
             for cmd in COMMAND_REGISTRY
         ]
         
-        # Call the Telegram API
+        # Call the Telegram API (using defaults from ApplicationBuilder)
         await application.bot.set_my_commands(telegram_commands)
         logger.info(f"Successfully registered {len(telegram_commands)} commands to Telegram slash menu.")
     except Exception as e:

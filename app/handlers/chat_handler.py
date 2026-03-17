@@ -91,14 +91,31 @@ class ChatHandler:
 
         except Exception as e:
             logger.error(f"Chat error: {e}")
-            await update.message.reply_text(f"❌ **Kesalahan:**\n`{str(e)}`", parse_mode="Markdown")
+            error_msg = f"❌ **Kesalahan:**\n`{str(e)}`"
+            try:
+                await update.message.reply_text(error_msg, parse_mode="Markdown")
+            except Exception:
+                await update.message.reply_text(f"❌ Kesalahan: {str(e)}")
 
     async def send_long_message(self, update: Update, text: str):
         limit = Config.MAX_REPLY_CHARS
+        
+        # Helper to send a single chunk with retry
+        async def send_chunk(chunk_text: str):
+            try:
+                await update.message.reply_text(chunk_text, parse_mode="Markdown")
+            except Exception:
+                # If markdown fails (e.g. unclosed tags or too long after formatting), 
+                # try without markdown
+                try:
+                    await update.message.reply_text(chunk_text)
+                except Exception as e:
+                    logger.error(f"Failed to send message chunk: {e}")
+
         if len(text) <= limit:
-            await update.message.reply_text(text, parse_mode="Markdown")
+            await send_chunk(text)
             return
 
         chunks = [text[i:i+limit] for i in range(0, len(text), limit)]
         for chunk in chunks:
-            await update.message.reply_text(chunk, parse_mode="Markdown")
+            await send_chunk(chunk)

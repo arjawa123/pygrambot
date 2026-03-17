@@ -21,6 +21,15 @@ from app.services.search_engine_service import SearchEngineService
 logger = logging.getLogger(__name__)
 
 class CommandHandler:
+    _chat_handler = None
+
+    @classmethod
+    def get_chat_handler(cls):
+        if cls._chat_handler is None:
+            from app.handlers.chat_handler import ChatHandler
+            cls._chat_handler = ChatHandler()
+        return cls._chat_handler
+
     @staticmethod
     async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
         text = (
@@ -128,15 +137,8 @@ class CommandHandler:
             logs = LogService.get_logs_summary(30, filter_level)
             header = f"📋 **Filtered Logs: {level}**\n" if filter_level else "📋 **Recent Logs (All)**\n"
             
-            try:
-                # Use edit_message_text to replace menu with logs
-                await query.edit_message_text(f"{header}```\n{logs}\n```", parse_mode="Markdown")
-                # Add a back button
-                keyboard = [[InlineKeyboardButton("🔙 Back to Menu", callback_data="logs:menu")]]
-                await query.edit_message_reply_markup(reply_markup=InlineKeyboardMarkup(keyboard))
-            except Exception:
-                # Fallback if content is same or other error
-                await query.message.reply_text(f"{header}```\n{logs}\n```", parse_mode="Markdown")
+            chat_h = CommandHandler.get_chat_handler()
+            await chat_h.send_long_message(update, f"{header}```\n{logs}\n```")
 
         elif data == "logs:menu":
             keyboard = [
@@ -257,7 +259,9 @@ class CommandHandler:
             logs = LogService.get_logs_summary(n_lines, filter_level)
             header = f"📋 **Recent Logs ({n_lines} lines)**\n"
             if filter_level: header = f"📋 **Filtered Logs: {filter_level.upper()}**\n"
-            await update.message.reply_text(f"{header}```\n{logs}\n```", parse_mode="Markdown")
+            
+            chat_h = CommandHandler.get_chat_handler()
+            await chat_h.send_long_message(update, f"{header}```\n{logs}\n```")
             return
 
         # No args: Show interactive Menu
@@ -290,7 +294,9 @@ class CommandHandler:
         status_msg = await update.message.reply_text(f"⏳ **Executing:** `{command}`...")
         output = await ExecService.run_command(command)
         final_text = f"💻 **Command:**\n`{command}`\n\n**Output:**\n```bash\n{output}\n```"
-        await status_msg.edit_text(final_text, parse_mode="Markdown")
+        
+        chat_h = CommandHandler.get_chat_handler()
+        await chat_h.send_long_message(update, final_text)
 
     @staticmethod
     async def ping(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -309,30 +315,77 @@ class CommandHandler:
         results = await SearchEngineService.search(query)
         response = SearchEngineService.format_results(results)
         
-        await status_msg.edit_text(response, parse_mode="Markdown")
+        chat_h = CommandHandler.get_chat_handler()
+        await chat_h.send_long_message(update, response)
 
     @staticmethod
     async def remindme(update: Update, context: ContextTypes.DEFAULT_TYPE):
-        """Simple reminder command: /remindme <n_minutes> <message>"""
-        if len(context.args) < 2:
-            await update.message.reply_text("❌ Gunakan: `/remindme <menit> <pesan>`")
+        """Flexible reminder command: /remindme <time/min> <message>"""
+        # We need to extract the time part and the message part carefully.
+        # Format can be:
+        # /remindme 10 Beli kopi
+        # /remindme 21:00 Makan malam
+        # /remindme 2026-03-20 15:30 Webinar
+        
+        args = context.args
+        if not args:
+            help_text = (
+                "❌ **Format Salah.** Gunakan:\n"
+                "• `/remindme 10 Pesan kopi` (menit)\n"
+                "• `/remindme 21:00 Makan malam` (jam hari ini)\n"
+                "• `/remindme 2026-03-20 15:00 Webinar` (tanggal & jam)"
+            )
+            await update.message.reply_text(help_text, parse_mode="Markdown")
             return
         
         try:
-            minutes = int(context.args[0])
-            seconds = minutes * 60
-            message = " ".join(context.args[1:])
+            time_part = args[0]
+            message_start_idx = 1
             
+            # Check if it's a date+time format (arg[0] is YYYY-MM-DD)
+            if "-" in time_part and len(args) >= 2:
+                time_part = f"{args[0]} {args[1]}"
+                message_start_idx = 2
+            
+            message = " ".join(args[message_start_idx:])
+            if not message:
+                await update.message.reply_text("❌ Mohon sertakan pesan pengingat.")
+                return
+
             run_at = await ReminderService.add_reminder(
                 context, update.effective_chat.id, update.effective_user.id,
-                seconds, message
+                time_part, message
             )
             
+            # Convert UTC run_at to local time for display
+            local_run_at = run_at.astimezone(None)
+            
             await update.message.reply_text(
-                f"✅ **Pengingat Set!**\nSaya akan mengingatkan Anda pada: `{run_at.strftime('%H:%M:%S')}`."
+                f"✅ **Pengingat Set!**\nSaya akan mengingatkan Anda pada: `{local_run_at.strftime('%Y-%m-%d %H:%M:%S')}`.\n"
+                f"📝 **Pesan:** {message}"
             )
-        except ValueError:
-            await update.message.reply_text("❌ Menit harus berupa angka.")
+        except ValueError as e:
+            await update.message.reply_text(f"❌ **Error:** {str(e)}")
+        except Exception as e:
+            logger.error(f"Remindme error: {e}")
+            await update.message.reply_text("❌ Terjadi kesalahan saat menyetel pengingat.")
+
+    @staticmethod
+    async def reminders(update: Update, context: ContextTypes.DEFAULT_TYPE):
+        """List all reminders for this chat."""
+        chat_id = update.effective_chat.id
+        rems = ReminderService.get_all_reminders(chat_id)
+        
+        if not rems:
+            await update.message.reply_text("📭 **Tidak ada pengingat aktif untuk chat ini.**")
+            return
+            
+        text = "⏰ **Daftar Pengingat Aktif:**\n\n"
+        for i, r in enumerate(rems, 1):
+            local_time = r['run_at'].astimezone(None)
+            text += f"{i}. `{local_time.strftime('%d/%m %H:%M')}` — {r['message']}\n"
+            
+        await update.message.reply_text(text, parse_mode="Markdown")
 
     @staticmethod
     @admin_only
@@ -353,7 +406,9 @@ class CommandHandler:
         output = await EvalService.run_python(code)
         
         final_text = f"🐍 **Python Input:**\n```python\n{code}\n```\n\n**Output:**\n```\n{output}\n```"
-        await status_msg.edit_text(final_text, parse_mode="Markdown")
+        
+        chat_h = CommandHandler.get_chat_handler()
+        await chat_h.send_long_message(update, final_text)
 
     @staticmethod
     async def stats(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -415,7 +470,9 @@ class CommandHandler:
         text = "🧠 **Memori Tersimpan:**\n"
         for m in mems: text += f"`{m[0]}`. {m[1]}\n"
         text += "\n💡 Gunakan `/forget <id>` untuk menghapus."
-        await update.message.reply_text(text, parse_mode="Markdown")
+        
+        chat_h = CommandHandler.get_chat_handler()
+        await chat_h.send_long_message(update, text)
 
     @staticmethod
     async def forget(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -435,7 +492,9 @@ class CommandHandler:
         text = "📁 **Daftar File:**\n"
         for f in files: text += f"`{f[0]}`. `{f[1]}`\n"
         text += "\n💡 Gunakan `/deletefile <id>` untuk menghapus."
-        await update.message.reply_text(text, parse_mode="Markdown")
+        
+        chat_h = CommandHandler.get_chat_handler()
+        await chat_h.send_long_message(update, text)
 
     @staticmethod
     async def deletefile(update: Update, context: ContextTypes.DEFAULT_TYPE):

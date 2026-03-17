@@ -1,7 +1,7 @@
 import httpx
 import logging
 from typing import List, Dict
-from app.llm.base import LLMProvider, LLMError
+from app.llm.base import LLMProvider, LLMError, RateLimitError
 from app.config import Config
 
 logger = logging.getLogger(__name__)
@@ -39,6 +39,8 @@ class OpenRouterProvider(LLMProvider):
             except httpx.HTTPStatusError as e:
                 logger.error(f"OpenRouter API error: {e.response.text}")
                 raise LLMError(f"OpenRouter error: {e.response.status_code}")
+            except RateLimitError:
+                raise
             except Exception as e:
                 logger.error(f"OpenRouter unexpected error: {e}")
                 raise LLMError(f"Unexpected error: {str(e)}")

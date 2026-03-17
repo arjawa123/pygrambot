@@ -37,6 +37,8 @@ class GroqProvider(LLMProvider):
             except httpx.HTTPStatusError as e:
                 logger.error(f"Groq API error: {e.response.text}")
                 raise LLMError(f"Groq error: {e.response.status_code}")
+            except RateLimitError:
+                raise
             except Exception as e:
                 logger.error(f"Groq unexpected error: {e}")
                 raise LLMError(f"Unexpected error: {str(e)}")

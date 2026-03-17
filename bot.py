@@ -1,11 +1,19 @@
 import asyncio
+import logging
+import html
+import json
+import traceback
+from telegram import Update
 from telegram.ext import (
     ApplicationBuilder,
     CommandHandler as TelegramCommandHandler,
     MessageHandler,
     CallbackQueryHandler,
     filters,
+    ContextTypes,
 )
+from telegram.request import HTTPXRequest
+from telegram.constants import ParseMode
 from app.config import Config
 from app.db import init_db
 from app.handlers.command_handler import CommandHandler
@@ -19,6 +27,27 @@ from app.services.reminder_service import ReminderService
 setup_logging()
 logger = get_logger("pygram")
 
+async def error_handler(update: object, context: ContextTypes.DEFAULT_TYPE) -> None:
+    """Log the error and notify the user if possible."""
+    logger.error("Exception while handling an update:", exc_info=context.error)
+
+    # traceback.format_exception returns a list of strings
+    tb_list = traceback.format_exception(None, context.error, context.error.__traceback__)
+    tb_string = "".join(tb_list)
+
+    # Build the message with some details and traceback
+    update_str = update.to_dict() if isinstance(update, Update) else str(update)
+    
+    # Notify user if update has an effective message
+    if update and hasattr(update, 'effective_message') and update.effective_message:
+        try:
+            await update.effective_message.reply_text(
+                f"❌ **Internal Error:**\n`{str(context.error)}`",
+                parse_mode=ParseMode.MARKDOWN
+            )
+        except Exception as e:
+            logger.error(f"Failed to send error message to user: {e}")
+
 def main():
     # 1. Validate Config
     try:
@@ -27,8 +56,12 @@ def main():
         logger.error(f"Config error: {e}")
         return
 
-    # 2. Build Application
-    app = ApplicationBuilder().token(Config.BOT_TOKEN).build()
+    # 2. Build Application with increased timeouts
+    request = HTTPXRequest(connect_timeout=30.0, read_timeout=30.0)
+    app = ApplicationBuilder().token(Config.BOT_TOKEN).request(request).build()
+    
+    # Add error handler
+    app.add_error_handler(error_handler)
     
     # 3. Post-init Hook for Async Tasks
     async def post_init(application):
@@ -52,6 +85,7 @@ def main():
     app.add_handler(TelegramCommandHandler("ping", CommandHandler.ping))
     app.add_handler(TelegramCommandHandler("search", CommandHandler.search))
     app.add_handler(TelegramCommandHandler("remindme", CommandHandler.remindme))
+    app.add_handler(TelegramCommandHandler("reminders", CommandHandler.reminders))
     app.add_handler(TelegramCommandHandler("py", CommandHandler.py_eval))
     app.add_handler(TelegramCommandHandler("stats", CommandHandler.stats))
     app.add_handler(TelegramCommandHandler("reset", CommandHandler.reset))

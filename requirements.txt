@@ -4,6 +4,6 @@ python-dotenv
 python-telegram-bot
 tenacity
 apscheduler
-duckduckgo-search==3.9.6
+ddgs
 tzdata
 pytz
