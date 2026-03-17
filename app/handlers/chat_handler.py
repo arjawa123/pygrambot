@@ -5,6 +5,7 @@ from telegram.constants import ChatAction
 from app.db import Database
 from app.llm.manager import LLMManager
 from app.services.memory_service import MemoryService
+from app.services.search_service import SearchService
 from app.config import Config
 
 logger = logging.getLogger(__name__)
@@ -52,11 +53,12 @@ class ChatHandler:
             web_header = "### WEB CONTEXT (Prioritas Tinggi):" if web_mode else "### WEB CONTEXT:"
             context_parts.append(f"{web_header}\nURL: {web_data['url']}\nTitle: {web_data['title']}\nContent: {web_data['content']}")
 
-        # C. Add File Context
-        recent_files = await Database.get_recent_files(chat_id, 2)
-        if recent_files:
-            file_ctx = "### FILE CONTEXT (Dokumen Terbaru):\n"
-            for f in recent_files:
+        # C. Add File Context (Smarter Search)
+        # Search for files matching keywords from the user question
+        relevant_files = await SearchService.find_relevant_files(chat_id, user_text, limit=3)
+        if relevant_files:
+            file_ctx = "### FILE CONTEXT (Dokumen Terkait):\n"
+            for f in relevant_files:
                 file_ctx += f"• File: {f[0]}\nContent Snippet: {f[2] or 'No text'}\n"
             context_parts.append(file_ctx)
 

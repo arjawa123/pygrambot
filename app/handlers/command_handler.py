@@ -14,6 +14,10 @@ from app.utils.command_registry import get_commands_by_category, CATEGORY_ICONS
 
 from app.utils.decorators import admin_only
 
+from app.services.reminder_service import ReminderService
+from app.services.eval_service import EvalService
+from app.services.search_engine_service import SearchEngineService
+
 logger = logging.getLogger(__name__)
 
 class CommandHandler:
@@ -291,6 +295,65 @@ class CommandHandler:
     @staticmethod
     async def ping(update: Update, context: ContextTypes.DEFAULT_TYPE):
         await update.message.reply_text("🏓 **Pong!** Bot aktif.")
+
+    @staticmethod
+    async def search(update: Update, context: ContextTypes.DEFAULT_TYPE):
+        """Free web search command."""
+        if not context.args:
+            await update.message.reply_text("❌ Gunakan: `/search <query>`")
+            return
+        
+        query = " ".join(context.args)
+        status_msg = await update.message.reply_text(f"🔍 **Mencari:** `{query}`...")
+        
+        results = await SearchEngineService.search(query)
+        response = SearchEngineService.format_results(results)
+        
+        await status_msg.edit_text(response, parse_mode="Markdown")
+
+    @staticmethod
+    async def remindme(update: Update, context: ContextTypes.DEFAULT_TYPE):
+        """Simple reminder command: /remindme <n_minutes> <message>"""
+        if len(context.args) < 2:
+            await update.message.reply_text("❌ Gunakan: `/remindme <menit> <pesan>`")
+            return
+        
+        try:
+            minutes = int(context.args[0])
+            seconds = minutes * 60
+            message = " ".join(context.args[1:])
+            
+            run_at = await ReminderService.add_reminder(
+                context, update.effective_chat.id, update.effective_user.id,
+                seconds, message
+            )
+            
+            await update.message.reply_text(
+                f"✅ **Pengingat Set!**\nSaya akan mengingatkan Anda pada: `{run_at.strftime('%H:%M:%S')}`."
+            )
+        except ValueError:
+            await update.message.reply_text("❌ Menit harus berupa angka.")
+
+    @staticmethod
+    @admin_only
+    async def py_eval(update: Update, context: ContextTypes.DEFAULT_TYPE):
+        """Python Code Interpreter (Admin Only)."""
+        if not context.args:
+            await update.message.reply_text("❌ Gunakan: `/py <code>`")
+            return
+            
+        code = " ".join(context.args)
+        # Handle code blocks
+        if code.startswith("```python"):
+            code = code.split("\n", 1)[1].rsplit("\n", 1)[0]
+        elif code.startswith("```"):
+            code = code.split("\n", 1)[1].rsplit("\n", 1)[0]
+            
+        status_msg = await update.message.reply_text("⏳ **Running Python Code...**")
+        output = await EvalService.run_python(code)
+        
+        final_text = f"🐍 **Python Input:**\n```python\n{code}\n```\n\n**Output:**\n```\n{output}\n```"
+        await status_msg.edit_text(final_text, parse_mode="Markdown")
 
     @staticmethod
     async def stats(update: Update, context: ContextTypes.DEFAULT_TYPE):

@@ -13,6 +13,7 @@ from app.handlers.chat_handler import ChatHandler
 from app.handlers.file_handler import FileHandler
 from app.utils.logging_setup import setup_logging, get_logger
 from app.services.telegram_command_service import setup_bot_commands
+from app.services.reminder_service import ReminderService
 
 # 0. Initialize Logging
 setup_logging()
@@ -34,6 +35,9 @@ def main():
         await init_db()
         logger.info("Database initialized successfully.")
         
+        # Start Scheduler for Reminders
+        await ReminderService.start_scheduler(application)
+        
         # Register Telegram Slash Commands
         await setup_bot_commands(application)
 
@@ -46,6 +50,9 @@ def main():
     app.add_handler(TelegramCommandHandler("start", CommandHandler.start))
     app.add_handler(TelegramCommandHandler("help", CommandHandler.help))
     app.add_handler(TelegramCommandHandler("ping", CommandHandler.ping))
+    app.add_handler(TelegramCommandHandler("search", CommandHandler.search))
+    app.add_handler(TelegramCommandHandler("remindme", CommandHandler.remindme))
+    app.add_handler(TelegramCommandHandler("py", CommandHandler.py_eval))
     app.add_handler(TelegramCommandHandler("stats", CommandHandler.stats))
     app.add_handler(TelegramCommandHandler("reset", CommandHandler.reset))
     app.add_handler(TelegramCommandHandler("model", CommandHandler.model))

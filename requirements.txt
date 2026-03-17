@@ -3,4 +3,7 @@ httpx
 python-dotenv
 python-telegram-bot
 tenacity
-psutil
+apscheduler
+duckduckgo-search==3.9.6
+tzdata
+pytz

@@ -43,6 +43,15 @@ CREATE TABLE IF NOT EXISTS settings (
     updated_at TEXT NOT NULL
 );
 
+CREATE TABLE IF NOT EXISTS reminders (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    chat_id INTEGER NOT NULL,
+    user_id INTEGER NOT NULL,
+    remind_time TEXT NOT NULL,
+    message TEXT NOT NULL,
+    status TEXT DEFAULT 'PENDING'
+);
+
 CREATE INDEX IF NOT EXISTS idx_messages_chat_created ON messages(chat_id, created_at);
 CREATE INDEX IF NOT EXISTS idx_files_chat_created ON files(chat_id, created_at);
 CREATE INDEX IF NOT EXISTS idx_memories_chat ON memories(chat_id);
@@ -114,6 +123,20 @@ class Database:
             cur = await db.execute(
                 "SELECT file_name, local_path, extracted_text, note, created_at FROM files WHERE chat_id = ? ORDER BY id DESC LIMIT ?",
                 (chat_id, limit),
+            )
+            return await cur.fetchall()
+
+    @staticmethod
+    async def search_files(chat_id: int, query: str, limit: int = 3) -> List[Tuple]:
+        """Searches for files containing specific keywords in their extracted text."""
+        async with aiosqlite.connect(Config.DB_PATH) as db:
+            # Use SQLite LIKE for basic searching
+            cur = await db.execute(
+                """SELECT file_name, local_path, extracted_text, note, created_at 
+                   FROM files 
+                   WHERE chat_id = ? AND extracted_text LIKE ? 
+                   ORDER BY id DESC LIMIT ?""",
+                (chat_id, f"%{query}%", limit),
             )
             return await cur.fetchall()
 
