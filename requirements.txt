@@ -4,6 +4,7 @@ python-dotenv
 python-telegram-bot
 tenacity
 apscheduler
-ddgs
+googlesearch-python
+beautifulsoup4
 tzdata
 pytz
