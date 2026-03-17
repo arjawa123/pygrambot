@@ -1,65 +1,40 @@
-# Dokumentasi Logika & Alur Proyek Pygram
+# Pygram Logic Flow
 
-Dokumen ini menjelaskan arsitektur, alur data, dan logika operasional dari proyek Pygram untuk memandu rencana pengembangan selanjutnya.
+Dokumen ini menjelaskan alur kerja internal Pygram AI Assistant.
 
-## 🏗️ Arsitektur Sistem
+## 1. Message Handling Flow
+Setiap pesan teks dari user diproses melalui `ChatHandler.handle_message`:
 
-Pygram terdiri dari dua komponen utama yang berjalan secara independen namun berbagi ekosistem file yang sama:
-1.  **Telegram AI Bot (`bot.py`)**: Bot asinkron yang terhubung ke Groq API dan menggunakan SQLite untuk persistensi.
-2.  **CLI Notes (`notes.py`)**: Aplikasi terminal sederhana untuk manajemen catatan berbasis teks.
+1.  **Ingestion**: Pesan simpan ke database `messages`.
+2.  **Context Building**:
+    *   **Memory**: Mengambil fakta dari tabel `memories`.
+    *   **Web**: Mengambil konten URL terbaru dari `context.chat_data` (jika ada).
+    *   **Files**: Mengambil 2 file teks terbaru yang diunggah dari tabel `files`.
+    *   **History**: Mengambil N pesan terakhir dari tabel `messages`.
+3.  **Prompt Construction**: Menggabungkan `SYSTEM_PROMPT` dengan semua konteks di atas menjadi satu instruksi terstruktur untuk LLM.
+4.  **LLM Execution**: Mengirim ke `LLMManager` yang mencoba Primary Provider (Groq) lalu Fallback (OpenRouter) jika terjadi rate limit.
+5.  **Response**: Jawaban AI disimpan ke database dan dikirim ke user (dipecah jika terlalu panjang).
 
----
+## 2. File Processing Flow
+Saat user mengirim dokumen (`FileHandler.handle_document`):
 
-## 🤖 Alur Logika Telegram Bot (`bot.py`)
+1.  **Sanitization**: Nama file dibersihkan.
+2.  **Storage**: File diunduh ke `bot_files/<chat_id>/`.
+3.  **Extraction**: `FileService` mengekstrak teks (mendukung .txt, .md, .py, .csv, dll).
+4.  **Indexing**: Metadata file dan teks yang diekstrak disimpan ke database `files`.
 
-### 1. Inisialisasi & Konfigurasi
-- **Loading Environment**: Membaca `.env` untuk API Keys dan parameter konfigurasi.
-- **Database Setup**: Menjalankan `init_db()` untuk memastikan tabel `messages` dan `files` tersedia di SQLite dengan mode `WAL` (Write-Ahead Logging) untuk performa konkuren.
-- **Client Setup**: Inisialisasi `httpx.AsyncClient` dengan base URL Groq API.
+## 3. Web Scraping Flow (`/web <url>`)
+1.  **Validation**: Memastikan URL valid.
+2.  **Fetching**: Mengunduh HTML menggunakan `httpx`.
+3.  **Parsing**: Menggunakan regex untuk mengekstrak Title dan membersihkan boilerplate (nav, footer, script).
+4.  **Session Storage**: Konten disimpan di `chat_data` agar bisa ditanyakan langsung oleh user tanpa perlu upload file.
 
-### 2. Siklus Penanganan Pesan (Message Handling)
-Setiap pesan yang masuk melalui Telegram melewati alur berikut:
+## 4. Security & Permissions
+*   Command sensitif (`/logs`, `/exec`, `/hostinfo`) dilindungi oleh decorator `@admin_only`.
+*   Hanya user ID yang terdaftar di `ALLOWED_USER_IDS` (.env) yang dapat mengeksekusi command tersebut.
 
-1.  **Penerimaan**: Bot menerima `Update` dari Telegram.
-2.  **Filter Keamanan**: Memeriksa apakah `user_id` diizinkan (jika `ALLOWED_USER_IDS` dikonfigurasi).
-3.  **Persistensi Pesan**: Pesan user disimpan ke tabel `messages` via `db_add_message()`.
-4.  **Pengambilan Konteks**:
-    - Mengambil $N$ riwayat pesan terakhir dari database.
-    - Mengambil konteks dari 3 file terakhir yang diunggah di chat tersebut.
-5.  **Permintaan LLM (`ask_llm`)**:
-    - Menyusun prompt sistem + konteks file + riwayat chat + pesan baru.
-    - Mengirim ke Groq API dengan mekanisme *retry* (`tenacity`) jika gagal.
-6.  **Penyimpanan Respon**: Jawaban dari AI disimpan kembali ke database sebagai role `assistant`.
-7.  **Pengiriman**: Mengirimkan respon ke user, dipecah menjadi beberapa bagian jika melebihi batas karakter Telegram.
-
-### 3. Penanganan File & Dokumen
-- **Download**: File diunduh ke direktori lokal `bot_files/`.
-- **Ekstraksi Teks**: Mendukung `.txt`, `.md`, `.py`, `.json`, `.csv`, dll.
-- **Metadata**: Menyimpan nama file, path lokal, dan hasil ekstraksi teks ke tabel `files`.
-- **Konteks AI**: Hasil ekstraksi dikirimkan ke AI sebagai bagian dari `system prompt` agar AI bisa "membaca" isi file tersebut.
-
-### 4. Database Schema
-- **`messages`**: `id`, `chat_id`, `user_id`, `role` (system/user/assistant), `content`, `created_at`.
-- **`files`**: `id`, `chat_id`, `user_id`, `file_name`, `local_path`, `extracted_text`, `note`, `created_at`.
-
----
-
-## 🛠️ Rencana Pengembangan Lanjutan (Development Plan)
-
-### Fase 1: Integrasi Komponen
-- [ ] **Sinkronisasi Catatan**: Hubungkan `notes.py` dengan database `bot.db` agar catatan CLI juga bisa diakses via Telegram Bot dan sebaliknya.
-- [ ] **Global Search**: Fitur pencarian pesan dan file di seluruh riwayat chat.
-
-### Fase 2: Peningkatan Kemampuan AI
-- [ ] **RAG (Retrieval-Augmented Generation)**: Alih-alih hanya 3 file terakhir, gunakan pencarian vektor (vector search) untuk mengambil konteks file yang paling relevan.
-- [ ] **Python Interpreter**: Implementasi penuh fitur `/py` untuk mengeksekusi kode Python secara aman di lingkungan terisolasi.
-
-### Fase 3: UI/UX & Manajemen
-- [ ] **Web Dashboard**: Interface berbasis Next.js untuk melihat riwayat chat dan file di browser.
-- [ ] **Multi-Model Support**: Pilihan untuk berganti model AI (misal: Llama 3, Mixtral) secara dinamis via perintah bot.
-
----
-
-## ⚠️ Catatan Teknis Penting
-- **Konkurensi**: Gunakan `asyncio.Semaphore` untuk membatasi jumlah permintaan API simultan guna menghindari *rate limiting*.
-- **Keamanan**: Pastikan file database (`bot.db`) dan folder `bot_files` masuk ke `.gitignore`.
+## 5. LLM Fallback Mechanism
+`LLMManager` mengatur failover otomatis:
+*   **Primary**: Default Groq (Cepat).
+*   **Fallback**: OpenRouter (Reliable/Gratis).
+*   Jika Primary terkena `429 Rate Limit`, bot otomatis berpindah ke Fallback untuk request tersebut.

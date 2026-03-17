@@ -30,9 +30,15 @@ class OpenRouterProvider(LLMProvider):
             
             try:
                 resp = await client.post(self.url, headers=headers, json=payload)
+                if resp.status_code == 429:
+                    raise RateLimitError("OpenRouter rate limit reached")
+                
                 resp.raise_for_status()
                 data = resp.json()
                 return data["choices"][0]["message"]["content"]
+            except httpx.HTTPStatusError as e:
+                logger.error(f"OpenRouter API error: {e.response.text}")
+                raise LLMError(f"OpenRouter error: {e.response.status_code}")
             except Exception as e:
-                logger.error(f"OpenRouter API error: {e}")
-                raise LLMError(f"OpenRouter error: {str(e)}")
+                logger.error(f"OpenRouter unexpected error: {e}")
+                raise LLMError(f"Unexpected error: {str(e)}")

@@ -12,6 +12,8 @@ from app.llm.manager import LLMManager
 from app.config import Config
 from app.utils.command_registry import get_commands_by_category, CATEGORY_ICONS
 
+from app.utils.decorators import admin_only
+
 logger = logging.getLogger(__name__)
 
 class CommandHandler:
@@ -180,20 +182,14 @@ class CommandHandler:
         await update.message.reply_text("✅ Konten disimpan ke memori permanen.")
 
     @staticmethod
+    @admin_only
     async def hostinfo(update: Update, context: ContextTypes.DEFAULT_TYPE):
-        user_id = update.effective_user.id
-        if Config.ALLOWED_USER_IDS and user_id not in Config.ALLOWED_USER_IDS:
-            await update.message.reply_text("🚫 **Akses Ditolak.**")
-            return
         info = SystemService.get_host_info_formatted()
         await update.message.reply_text(info, parse_mode="Markdown")
 
     @staticmethod
+    @admin_only
     async def logs(update: Update, context: ContextTypes.DEFAULT_TYPE):
-        user_id = update.effective_user.id
-        if Config.ALLOWED_USER_IDS and user_id not in Config.ALLOWED_USER_IDS:
-            await update.message.reply_text("🚫 **Akses Ditolak.**")
-            return
         n_lines = 30
         filter_level = None
         if context.args:
@@ -205,11 +201,8 @@ class CommandHandler:
         await update.message.reply_text(f"{header}```\n{logs}\n```", parse_mode="Markdown")
 
     @staticmethod
+    @admin_only
     async def exec_cmd(update: Update, context: ContextTypes.DEFAULT_TYPE):
-        user_id = update.effective_user.id
-        if Config.ALLOWED_USER_IDS and user_id not in Config.ALLOWED_USER_IDS:
-            await update.message.reply_text("🚫 **Akses Ditolak.**")
-            return
         if not context.args:
             await update.message.reply_text("❌ Gunakan: `/exec <command>`")
             return

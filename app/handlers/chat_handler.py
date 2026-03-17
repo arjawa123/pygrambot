@@ -37,38 +37,37 @@ class ChatHandler:
         # 2. Show typing
         await context.bot.send_chat_action(chat_id=chat_id, action=ChatAction.TYPING)
 
-        # 3. Build messages with ALL contexts
-        messages = [{"role": "system", "content": SYSTEM_PROMPT}]
+        # 3. Build Contextual System Prompt
+        context_parts = []
         
         # A. Add Memory Context
         memory_ctx = await MemoryService.get_memory_context(chat_id)
         if memory_ctx:
-            messages.append({"role": "system", "content": memory_ctx})
+            context_parts.append(f"### LONG-TERM MEMORY (Fakta Penting):\n{memory_ctx}")
 
-        # B. Add Web Context (Temporary for current session)
+        # B. Add Web Context
         web_data = context.chat_data.get('web_context')
         web_mode = context.chat_data.get('web_qa_mode', False)
-        
         if web_data:
-            if web_mode:
-                # When Q&A mode is active, make the context VERY prominent
-                messages.append({
-                    "role": "system", 
-                    "content": f"PRIORITAS UTAMA: Kamu sedang dalam mode Web Q&A. Jawablah pertanyaan user HANYA berdasarkan konten dari URL: {web_data['url']}. \n\nISI KONTEN:\n{web_data['content']}"
-                })
-            else:
-                messages.append({
-                    "role": "system", 
-                    "content": f"Konteks Web Terbaru (URL: {web_data['url']}):\n{web_data['content']}"
-                })
+            web_header = "### WEB CONTEXT (Prioritas Tinggi):" if web_mode else "### WEB CONTEXT:"
+            context_parts.append(f"{web_header}\nURL: {web_data['url']}\nTitle: {web_data['title']}\nContent: {web_data['content']}")
 
         # C. Add File Context
         recent_files = await Database.get_recent_files(chat_id, 2)
         if recent_files:
-            file_ctx = "Konteks file terbaru:\n"
+            file_ctx = "### FILE CONTEXT (Dokumen Terbaru):\n"
             for f in recent_files:
-                file_ctx += f"• File: {f[0]}\nIsi: {f[2] or 'Tidak ada teks'}\n\n"
-            messages.append({"role": "system", "content": file_ctx})
+                file_ctx += f"• File: {f[0]}\nContent Snippet: {f[2] or 'No text'}\n"
+            context_parts.append(file_ctx)
+
+        # Combine into a single System Prompt update
+        final_system_prompt = SYSTEM_PROMPT
+        if context_parts:
+            final_system_prompt += "\n\nBERIKUT ADALAH KONTEKS SAAT INI UNTUK MEMBANTU JAWABANMU:\n" + "\n\n".join(context_parts)
+            if web_mode:
+                final_system_prompt += "\n\nCATATAN: Kamu sedang dalam mode Web Q&A. Utamakan informasi dari Web Context di atas."
+
+        messages = [{"role": "system", "content": final_system_prompt}]
 
         # D. Add Chat History
         history = await Database.get_history(chat_id)
