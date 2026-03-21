@@ -1,6 +1,9 @@
 import json
 import logging
-from typing import Dict, Any, Optional
+import shlex
+import os
+import asyncio
+from typing import Dict, Any, Optional, List
 from app.services.exec_service import ExecService
 
 logger = logging.getLogger(__name__)
@@ -20,12 +23,14 @@ class TermuxService:
     async def show_toast(text: str, short: bool = True):
         """Show a toast notification on the device."""
         duration = "short" if short else "long"
-        await ExecService.run_command(f"termux-toast -d {duration} '{text}'")
+        safe_text = shlex.quote(text)
+        await ExecService.run_command(f"termux-toast -d {duration} {safe_text}")
 
     @staticmethod
     async def tts_speak(text: str):
         """Speak text using Text-to-Speech."""
-        await ExecService.run_command(f"termux-tts-speak '{text}'")
+        safe_text = shlex.quote(text)
+        await ExecService.run_command(f"termux-tts-speak {safe_text}")
 
     @staticmethod
     async def get_location() -> Optional[Dict[str, Any]]:
@@ -56,21 +61,45 @@ class TermuxService:
     @staticmethod
     async def set_clipboard(text: str):
         """Set the clipboard content."""
-        await ExecService.run_command(f"termux-clipboard-set '{text}'")
+        safe_text = shlex.quote(text)
+        await ExecService.run_command(f"termux-clipboard-set {safe_text}")
 
     @staticmethod
     async def take_photo(camera_id: int = 0, file_path: str = "bot_files/camera_photo.jpg") -> str:
-        """Take a photo and save it to a file."""
-        await ExecService.run_command(f"termux-camera-photo -c {camera_id} {file_path}")
-        return file_path
+        """Capture photo using detached execution to prevent shell hangs."""
+        abs_path = os.path.abspath(file_path)
+        os.makedirs(os.path.dirname(abs_path), exist_ok=True)
+        if os.path.exists(abs_path): os.remove(abs_path)
+        
+        safe_path = shlex.quote(abs_path)
+        # Trigger detached camera process - No output waiting
+        cmd = f"termux-camera-photo -c {camera_id} {safe_path}"
+        logger.info(f"Triggering camera detached: {cmd}")
+        await ExecService.run_detached(cmd)
+        
+        # Polling: Wait up to 20 seconds
+        for i in range(20):
+            await asyncio.sleep(1)
+            if os.path.exists(abs_path) and os.path.getsize(abs_path) > 1000:
+                logger.info(f"Photo ready after {i+1}s")
+                return abs_path
+        
+        # Fallback for camera 0
+        if camera_id == 0:
+            logger.warning("Retrying default camera...")
+            await ExecService.run_detached(f"termux-camera-photo {safe_path}")
+            for i in range(10):
+                await asyncio.sleep(1)
+                if os.path.exists(abs_path) and os.path.getsize(abs_path) > 1000:
+                    return abs_path
+
+        return abs_path
 
     @staticmethod
-    async def get_volume() -> Optional[Dict[str, Any]]:
+    async def get_volume() -> Optional[List[Dict[str, Any]]]:
         """Get volume status for all streams."""
         output = await ExecService.run_command("termux-volume")
         try:
-            # termux-volume returns multiple JSON objects (one per stream), not a single array
-            # We'll try to wrap it if it's not already an array
             if not output.strip().startswith("["):
                 output = "[" + output.replace("}", "},").rstrip(",") + "]"
             return json.loads(output)
@@ -81,4 +110,70 @@ class TermuxService:
     @staticmethod
     async def send_sms(number: str, message: str):
         """Send an SMS to a specified number."""
-        await ExecService.run_command(f"termux-sms-send -n {number} '{message}'")
+        safe_num = shlex.quote(number)
+        safe_msg = shlex.quote(message)
+        await ExecService.run_command(f"termux-sms-send -n {safe_num} {safe_msg}")
+
+    @staticmethod
+    async def record_microphone(duration_sec: int = 5, file_path: str = "bot_files/record.m4a") -> str:
+        """Record audio using detached execution and manual stop."""
+        abs_path = os.path.abspath(file_path)
+        os.makedirs(os.path.dirname(abs_path), exist_ok=True)
+        if os.path.exists(abs_path): os.remove(abs_path)
+        
+        safe_path = shlex.quote(abs_path)
+        
+        # 1. Detached stop any previous session
+        await ExecService.run_detached("termux-microphone-record -q")
+        await asyncio.sleep(0.5)
+        
+        # 2. Detached start recording
+        await ExecService.run_detached(f"termux-microphone-record -f {safe_path} -e aac")
+        
+        # 3. Wait duration
+        await asyncio.sleep(duration_sec)
+        
+        # 4. Detached stop
+        await ExecService.run_detached("termux-microphone-record -q")
+        
+        # 5. Sync wait
+        await asyncio.sleep(2)
+        
+        return abs_path
+
+    @staticmethod
+    async def get_wifi_info() -> Optional[List[Dict[str, Any]]]:
+        """Get WiFi scan info."""
+        output = await ExecService.run_command("termux-wifi-scaninfo")
+        try:
+            return json.loads(output)
+        except (json.JSONDecodeError, Exception) as e:
+            logger.error(f"Error parsing WiFi info: {e}")
+            return None
+
+    @staticmethod
+    async def show_notification(title: str, content: str, id: str = "bot_notif"):
+        """Show a persistent Android notification."""
+        safe_title = shlex.quote(title)
+        safe_content = shlex.quote(content)
+        await ExecService.run_command(f"termux-notification -t {safe_title} -c {safe_content} -i {id}")
+
+    @staticmethod
+    async def get_telephony_info() -> Optional[Dict[str, Any]]:
+        """Get device telephony info."""
+        output = await ExecService.run_command("termux-telephony-deviceinfo")
+        try:
+            return json.loads(output)
+        except (json.JSONDecodeError, Exception) as e:
+            logger.error(f"Error parsing telephony info: {e}")
+            return None
+
+    @staticmethod
+    async def get_sensors() -> Optional[Any]:
+        """Get a list of available sensors."""
+        output = await ExecService.run_command("termux-sensor -l")
+        try:
+            return json.loads(output)
+        except (json.JSONDecodeError, Exception) as e:
+            logger.error(f"Error parsing sensor info: {e}")
+            return None

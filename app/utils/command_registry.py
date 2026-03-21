@@ -62,8 +62,13 @@ COMMAND_REGISTRY: List[BotCommandInfo] = [
     BotCommandInfo("torch", "Nyalakan/matikan senter", "Device", admin_only=True, usage="/torch on|off"),
     BotCommandInfo("vibrate", "Getarkan device", "Device", admin_only=True, usage="/vibrate <ms>"),
     BotCommandInfo("clipboard", "Baca/tulis clipboard device", "Device", admin_only=True, usage="/clipboard [teks]"),
-    BotCommandInfo("photo", "Ambil foto dari kamera device", "Device", admin_only=True),
+    BotCommandInfo("photo", "Ambil foto kamera device", "Device", admin_only=True, usage="/photo [0|1]"),
+    BotCommandInfo("record", "Rekam audio dari microphone", "Device", admin_only=True, usage="/record <detik>"),
     BotCommandInfo("volume", "Cek volume audio device", "Device", admin_only=True),
+    BotCommandInfo("wifi", "Scan jaringan WiFi di sekitar", "Device", admin_only=True),
+    BotCommandInfo("notify", "Kirim notifikasi ke Android", "Device", admin_only=True, usage="/notify [judul|]isi"),
+    BotCommandInfo("telephony", "Cek info telepon & device", "Device", admin_only=True),
+    BotCommandInfo("sensor", "Daftar sensor yang tersedia", "Device", admin_only=True),
     BotCommandInfo("sms_send", "Kirim SMS dari device", "Device", admin_only=True, usage="/sms_send <nomor> <pesan>"),
 ]
 

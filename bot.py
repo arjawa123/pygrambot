@@ -122,7 +122,12 @@ def main():
     app.add_handler(TelegramCommandHandler("vibrate", TermuxHandler.vibrate_command))
     app.add_handler(TelegramCommandHandler("clipboard", TermuxHandler.clipboard_command))
     app.add_handler(TelegramCommandHandler("photo", TermuxHandler.photo_command))
+    app.add_handler(TelegramCommandHandler("record", TermuxHandler.record_command))
     app.add_handler(TelegramCommandHandler("volume", TermuxHandler.volume_command))
+    app.add_handler(TelegramCommandHandler("wifi", TermuxHandler.wifi_command))
+    app.add_handler(TelegramCommandHandler("notify", TermuxHandler.notify_command))
+    app.add_handler(TelegramCommandHandler("telephony", TermuxHandler.telephony_command))
+    app.add_handler(TelegramCommandHandler("sensor", TermuxHandler.sensor_command))
     app.add_handler(TelegramCommandHandler("sms_send", TermuxHandler.sms_send_command))
 
     # Callback Handlers

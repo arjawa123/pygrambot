@@ -6,14 +6,31 @@ logger = logging.getLogger(__name__)
 
 class ExecService:
     @staticmethod
+    async def run_detached(command: str):
+        """
+        Executes a shell command without waiting for its completion or output.
+        Useful for background tasks like camera/mic.
+        """
+        try:
+            # We don't use pipes here to ensure the process is fully detached
+            process = await asyncio.create_subprocess_shell(
+                command,
+                stdout=asyncio.subprocess.DEVNULL,
+                stderr=asyncio.subprocess.DEVNULL
+            )
+            # We don't communicate or wait here, we just let it run.
+            return True
+        except Exception as e:
+            logger.error(f"ExecService Detached Error: {str(e)}")
+            return False
+
+    @staticmethod
     async def run_command(command: str, timeout: int = 15, max_chars: int = 3800) -> str:
         """
         Executes a shell command asynchronously and returns the output.
         Includes timeout and output size protection.
         """
         try:
-            # We use create_subprocess_shell to allow pipes, redirects, etc.
-            # Security is handled by ALLOWED_USER_IDS at the handler level.
             process = await asyncio.create_subprocess_shell(
                 command,
                 stdout=asyncio.subprocess.PIPE,
