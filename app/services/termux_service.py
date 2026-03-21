@@ -208,3 +208,24 @@ class TermuxService:
         """Stop audio playback."""
         await ExecService.run_command("termux-media-player stop")
         return "⏹️ Playback dihentikan."
+
+    @staticmethod
+    async def set_brightness(level: int) -> str:
+        """Set screen brightness (0-255)."""
+        # Clamp value
+        level = max(0, min(255, level))
+        await ExecService.run_command(f"termux-brightness {level}")
+        return f"🔆 Brightness set to <code>{level}</code>"
+
+    @staticmethod
+    async def set_volume(stream: str, volume: int) -> str:
+        """Set volume for a specific stream."""
+        await ExecService.run_command(f"termux-volume {stream} {volume}")
+        return f"🔊 Volume for <code>{stream}</code> set to <code>{volume}</code>"
+
+    @staticmethod
+    async def speech_to_text() -> str:
+        """Perform Speech-to-Text and return recognized text."""
+        # This command usually shows a dialog on the device
+        output = await ExecService.run_command("termux-speech-to-text", timeout=30)
+        return output

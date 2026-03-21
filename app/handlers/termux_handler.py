@@ -314,3 +314,47 @@ class TermuxHandler:
         """Handler for /stopplay command."""
         result = await TermuxService.stop_audio()
         await update.message.reply_text(result)
+
+    @staticmethod
+    @admin_only
+    async def brightness_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
+        """Handler for /brightness <0-255> command."""
+        if not context.args or not context.args[0].isdigit():
+            await update.message.reply_text("Usage: <code>/brightness &lt;0-255&gt;</code>", parse_mode=ParseMode.HTML)
+            return
+        
+        level = int(context.args[0])
+        result = await TermuxService.set_brightness(level)
+        await update.message.reply_text(result, parse_mode=ParseMode.HTML)
+
+    @staticmethod
+    @admin_only
+    async def set_volume_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
+        """Handler for /volume_set <stream> <level> command."""
+        if len(context.args) < 2:
+            streams = "alarm, music, notification, ring, system, voice_call"
+            await update.message.reply_text(f"Usage: <code>/volume_set &lt;stream&gt; &lt;level&gt;</code>\nStreams: <code>{streams}</code>", parse_mode=ParseMode.HTML)
+            return
+        
+        stream = context.args[0].lower()
+        try:
+            level = int(context.args[1])
+        except ValueError:
+            await update.message.reply_text("❌ Volume level must be a number.")
+            return
+            
+        result = await TermuxService.set_volume(stream, level)
+        await update.message.reply_text(result, parse_mode=ParseMode.HTML)
+
+    @staticmethod
+    @admin_only
+    async def stt_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
+        """Handler for /stt command."""
+        await update.message.reply_text("🎤 <b>Mendengarkan...</b>\nSilakan bicara di dekat device server.", parse_mode=ParseMode.HTML)
+        result = await TermuxService.speech_to_text()
+        
+        if not result or result.strip() == "(Command finished with no output)":
+            await update.message.reply_text("❌ Tidak ada suara yang terdeteksi atau dialog dibatalkan.")
+        else:
+            safe_text = html.escape(result)
+            await update.message.reply_text(f"📝 <b>Hasil STT:</b>\n<code>{safe_text}</code>", parse_mode=ParseMode.HTML)

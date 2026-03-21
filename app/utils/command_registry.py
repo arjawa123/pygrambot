@@ -11,69 +11,81 @@ class BotCommandInfo:
 
 # Mapping icons to categories
 CATEGORY_ICONS = {
-    "General": "🤖",
-    "Files": "📁",
-    "Memory": "🧠",
+    "Utama": "🏠",
+    "AI & Search": "🔍",
+    "Tools": "🛠️",
+    "Memori": "🧠",
+    "File": "📁",
     "Web": "🌐",
-    "System": "⚙️",
-    "Device": "📱"
+    "Sistem": "⚙️",
+    "Kontrol Device": "📱",
+    "Sensor & Info": "ℹ️"
 }
 
 # Single Source of Truth for all bot commands
 COMMAND_REGISTRY: List[BotCommandInfo] = [
-    # General
-    BotCommandInfo("start", "Mulai bot & perkenalan", "General"),
-    BotCommandInfo("help", "Lihat bantuan command", "General"),
-    BotCommandInfo("ping", "Cek status koneksi", "General"),
-    BotCommandInfo("search", "Cari informasi di internet", "General", usage="/search <query>"),
-    BotCommandInfo("remindme", "Set pengingat fleksibel", "General", usage="/remindme <waktu> <pesan>"),
-    BotCommandInfo("reminders", "Daftar pengingat aktif", "General"),
-    BotCommandInfo("py", "Jalankan kode Python (Admin)", "General", admin_only=True, usage="/py <code>"),
-    BotCommandInfo("model", "Info model AI aktif", "General"),
-    BotCommandInfo("setmodel", "Ubah provider AI utama", "General", admin_only=True),
-    BotCommandInfo("reset", "Hapus riwayat chat", "General"),
-    BotCommandInfo("stats", "Statistik penggunaan", "General"),
+    # Utama
+    BotCommandInfo("start", "Mulai bot & perkenalan", "Utama"),
+    BotCommandInfo("help", "Lihat bantuan command", "Utama"),
+    BotCommandInfo("ping", "Cek status koneksi", "Utama"),
+    BotCommandInfo("stats", "Statistik penggunaan", "Utama"),
+    BotCommandInfo("reset", "Hapus riwayat chat", "Utama"),
     
-    # Files
-    BotCommandInfo("files", "Daftar file diunggah", "Files"),
-    BotCommandInfo("deletefile", "Hapus file by ID", "Files", usage="/deletefile <id>"),
-    BotCommandInfo("clearfiles", "Hapus semua file", "Files"),
+    # AI & Search
+    BotCommandInfo("search", "Cari informasi di internet", "AI & Search", usage="/search <query>"),
+    BotCommandInfo("model", "Info model AI aktif", "AI & Search"),
+    BotCommandInfo("setmodel", "Ubah provider AI utama", "AI & Search", admin_only=True),
+    BotCommandInfo("py", "Jalankan kode Python (Multi-line)", "AI & Search", admin_only=True, usage="/py <code>"),
     
-    # Memory
-    BotCommandInfo("remember", "Simpan fakta baru", "Memory", usage="/remember <teks>"),
-    BotCommandInfo("memories", "Daftar memori chat", "Memory"),
-    BotCommandInfo("forget", "Hapus memori by ID", "Memory", usage="/forget <id>"),
+    # Tools
+    BotCommandInfo("remindme", "Set pengingat fleksibel", "Tools", usage="/remindme <waktu> <pesan>"),
+    BotCommandInfo("reminders", "Daftar pengingat aktif", "Tools"),
+    
+    # Memori
+    BotCommandInfo("remember", "Simpan fakta baru", "Memori", usage="/remember <teks>"),
+    BotCommandInfo("memories", "Daftar memori chat", "Memori"),
+    BotCommandInfo("forget", "Hapus memori by ID", "Memori", usage="/forget <id>"),
+    
+    # File
+    BotCommandInfo("files", "Daftar file diunggah", "File"),
+    BotCommandInfo("deletefile", "Hapus file by ID", "File", usage="/deletefile <id>"),
+    BotCommandInfo("clearfiles", "Hapus semua file", "File"),
     
     # Web
     BotCommandInfo("web", "Baca konten website", "Web", usage="/web <url>"),
     BotCommandInfo("saveweb", "Simpan konten web ke memory", "Web"),
     BotCommandInfo("exitweb", "Keluar dari mode tanya-jawab web", "Web"),
     
-    # System (Admin Only)
-    BotCommandInfo("hostinfo", "Info host/device", "System", admin_only=True),
-    BotCommandInfo("logs", "Lihat log terbaru", "System", admin_only=True, usage="/logs <n>"),
-    BotCommandInfo("exec", "Eksekusi CLI command", "System", admin_only=True, usage="/exec <command>"),
-    BotCommandInfo("restart", "Restart bot script", "System", admin_only=True),
-    BotCommandInfo("git", "Update dari repository git", "System", admin_only=True, usage="/git [pull origin master]"),
+    # Sistem (Admin Only)
+    BotCommandInfo("hostinfo", "Info host/device", "Sistem", admin_only=True),
+    BotCommandInfo("logs", "Lihat log terbaru", "Sistem", admin_only=True, usage="/logs <n>"),
+    BotCommandInfo("exec", "Eksekusi CLI command", "Sistem", admin_only=True, usage="/exec <command>"),
+    BotCommandInfo("restart", "Restart bot script", "Sistem", admin_only=True),
+    BotCommandInfo("git", "Update repository git", "Sistem", admin_only=True, usage="/git [pull]"),
 
-    # Device (Termux API - Admin Only)
-    BotCommandInfo("battery", "Cek status baterai device", "Device", admin_only=True),
-    BotCommandInfo("toast", "Tampilkan pesan toast di device", "Device", admin_only=True, usage="/toast <pesan>"),
-    BotCommandInfo("tts", "Suarakan teks di device (TTS)", "Device", admin_only=True, usage="/tts <teks>"),
-    BotCommandInfo("location", "Cek lokasi GPS device", "Device", admin_only=True),
-    BotCommandInfo("torch", "Nyalakan/matikan senter", "Device", admin_only=True, usage="/torch on|off"),
-    BotCommandInfo("vibrate", "Getarkan device", "Device", admin_only=True, usage="/vibrate <ms>"),
-    BotCommandInfo("clipboard", "Baca/tulis clipboard device", "Device", admin_only=True, usage="/clipboard [teks]"),
-    BotCommandInfo("photo", "Ambil foto kamera device", "Device", admin_only=True, usage="/photo [0|1]"),
-    BotCommandInfo("record", "Rekam audio dari microphone", "Device", admin_only=True, usage="/record <detik>"),
-    BotCommandInfo("volume", "Cek volume audio device", "Device", admin_only=True),
-    BotCommandInfo("wifi", "Scan jaringan WiFi di sekitar", "Device", admin_only=True),
-    BotCommandInfo("notify", "Kirim notifikasi ke Android", "Device", admin_only=True, usage="/notify [judul|]isi"),
-    BotCommandInfo("telephony", "Cek info telepon & device", "Device", admin_only=True),
-    BotCommandInfo("sensor", "Daftar sensor yang tersedia", "Device", admin_only=True),
-    BotCommandInfo("sms_send", "Kirim SMS dari device", "Device", admin_only=True, usage="/sms_send <nomor> <pesan>"),
-    BotCommandInfo("play", "Putar audio dari URL di device", "Device", admin_only=True, usage="/play <url>"),
-    BotCommandInfo("stopplay", "Hentikan putaran audio", "Device", admin_only=True),
+    # Kontrol Device (Admin Only)
+    BotCommandInfo("toast", "Tampilkan pesan toast", "Kontrol Device", admin_only=True, usage="/toast <pesan>"),
+    BotCommandInfo("tts", "Suarakan teks (TTS)", "Kontrol Device", admin_only=True, usage="/tts <teks>"),
+    BotCommandInfo("torch", "Nyalakan/matikan senter", "Kontrol Device", admin_only=True, usage="/torch on|off"),
+    BotCommandInfo("vibrate", "Getarkan device", "Kontrol Device", admin_only=True, usage="/vibrate <ms>"),
+    BotCommandInfo("clipboard", "Baca/tulis clipboard", "Kontrol Device", admin_only=True, usage="/clipboard [teks]"),
+    BotCommandInfo("photo", "Ambil foto kamera", "Kontrol Device", admin_only=True, usage="/photo [0|1]"),
+    BotCommandInfo("record", "Rekam audio mic", "Kontrol Device", admin_only=True, usage="/record <detik>"),
+    BotCommandInfo("notify", "Kirim notifikasi Android", "Kontrol Device", admin_only=True, usage="/notify [judul|]isi"),
+    BotCommandInfo("play", "Putar audio dari URL", "Kontrol Device", admin_only=True, usage="/play <url>"),
+    BotCommandInfo("stopplay", "Hentikan audio", "Kontrol Device", admin_only=True),
+    BotCommandInfo("brightness", "Atur kecerahan layar", "Kontrol Device", admin_only=True, usage="/brightness <0-255>"),
+    BotCommandInfo("volume_set", "Atur volume stream", "Kontrol Device", admin_only=True, usage="/volume_set <stream> <level>"),
+    BotCommandInfo("stt", "Speech-to-Text", "Kontrol Device", admin_only=True),
+    BotCommandInfo("sms_send", "Kirim SMS", "Kontrol Device", admin_only=True, usage="/sms_send <nomor> <pesan>"),
+
+    # Sensor & Info (Admin Only)
+    BotCommandInfo("battery", "Cek status baterai", "Sensor & Info", admin_only=True),
+    BotCommandInfo("location", "Cek lokasi GPS", "Sensor & Info", admin_only=True),
+    BotCommandInfo("volume", "Cek volume semua stream", "Sensor & Info", admin_only=True),
+    BotCommandInfo("wifi", "Scan jaringan WiFi", "Sensor & Info", admin_only=True),
+    BotCommandInfo("telephony", "Cek info telepon", "Sensor & Info", admin_only=True),
+    BotCommandInfo("sensor", "Daftar semua sensor", "Sensor & Info", admin_only=True),
 ]
 
 def get_commands_by_category():

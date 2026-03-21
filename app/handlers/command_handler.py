@@ -45,17 +45,32 @@ class CommandHandler:
     @staticmethod
     async def help(update: Update, context: ContextTypes.DEFAULT_TYPE):
         categories = get_commands_by_category()
-        help_text = "🛠️ <b>Bantuan & Fitur Pygram</b>\n\n"
-        for category, commands in categories.items():
-            icon = CATEGORY_ICONS.get(category, "🔹")
-            help_text += f"{icon} <b>{category}</b>\n"
-            for cmd in commands:
-                cmd_link = f"/{cmd.command}"
-                usage_info = html.escape(cmd.usage[len(cmd_link):]) if cmd.usage and " " in cmd.usage else ""
-                admin_tag = " (Admin Only)" if cmd.admin_only else ""
-                help_text += f"<b>{cmd_link}</b>{usage_info} — {html.escape(cmd.description)}{admin_tag}\n"
-            help_text += "\n"
-        await update.message.reply_text(help_text, parse_mode=ParseMode.HTML)
+        
+        keyboard = []
+        # Create 2 buttons per row
+        category_names = list(categories.keys())
+        for i in range(0, len(category_names), 2):
+            row = []
+            cat1 = category_names[i]
+            icon1 = CATEGORY_ICONS.get(cat1, "🔹")
+            row.append(InlineKeyboardButton(f"{icon1} {cat1}", callback_data=f"help:cat:{cat1}"))
+            
+            if i + 1 < len(category_names):
+                cat2 = category_names[i+1]
+                icon2 = CATEGORY_ICONS.get(cat2, "🔹")
+                row.append(InlineKeyboardButton(f"{icon2} {cat2}", callback_data=f"help:cat:{cat2}"))
+            keyboard.append(row)
+
+        help_text = (
+            "🛠️ <b>Pusat Bantuan Pygram</b>\n\n"
+            "Gunakan tombol di bawah untuk melihat daftar command berdasarkan kategori.\n\n"
+            "💡 <i>Beberapa command mungkin hanya tersedia untuk Admin.</i>"
+        )
+        
+        if update.callback_query:
+            await update.callback_query.edit_message_text(help_text, reply_markup=InlineKeyboardMarkup(keyboard), parse_mode=ParseMode.HTML)
+        else:
+            await update.message.reply_text(help_text, reply_markup=InlineKeyboardMarkup(keyboard), parse_mode=ParseMode.HTML)
 
     @staticmethod
     async def web(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -113,14 +128,16 @@ class CommandHandler:
 
     @staticmethod
     async def handle_callback(update: Update, context: ContextTypes.DEFAULT_TYPE):
-        """Handles inline button clicks for web and logs actions."""
+        """Handles inline button clicks for web, logs, and help."""
         query = update.callback_query
         data = query.data
         chat_id = update.effective_chat.id
         user_id = update.effective_user.id
         
-        # Security: Logs filtering is Admin Only
-        if data.startswith("logs:") and Config.ALLOWED_USER_IDS and user_id not in Config.ALLOWED_USER_IDS:
+        # Security check: Admin only for certain callbacks
+        is_admin = not Config.ALLOWED_USER_IDS or user_id in Config.ALLOWED_USER_IDS
+        
+        if (data.startswith("logs:") or data.startswith("setmodel:")) and not is_admin:
             await query.answer("🚫 Akses Ditolak.", show_alert=True)
             return
 
@@ -130,6 +147,38 @@ class CommandHandler:
             return
 
         await query.answer() # Acknowledge the click
+
+        # --- HELP MENU NAVIGATION ---
+        if data == "help:main":
+            await CommandHandler.help(update, context)
+
+        elif data.startswith("help:cat:"):
+            category = data.split(":")[-1]
+            categories = get_commands_by_category()
+            commands = categories.get(category, [])
+            icon = CATEGORY_ICONS.get(category, "🔹")
+            
+            text = f"{icon} <b>Kategori: {category}</b>\n\n"
+            for cmd in commands:
+                # Filter for non-admins if restricted
+                if cmd.admin_only and not is_admin:
+                    continue
+                    
+                cmd_link = f"/{cmd.command}"
+                # Usage handling
+                usage = ""
+                if cmd.usage:
+                    # Escape and clean up usage
+                    usage = html.escape(cmd.usage)
+                    if usage.startswith(cmd_link):
+                        usage = usage[len(cmd_link):].strip()
+                    if usage: usage = f" <code>{usage}</code>"
+                
+                admin_tag = " 🔒" if cmd.admin_only else ""
+                text += f"• <b>{cmd_link}</b>{usage}\n  └ {html.escape(cmd.description)}{admin_tag}\n"
+            
+            keyboard = [[InlineKeyboardButton("⬅️ Kembali ke Menu", callback_data="help:main")]]
+            await query.edit_message_text(text, reply_markup=InlineKeyboardMarkup(keyboard), parse_mode=ParseMode.HTML)
 
         # --- LOGS FILTERING ---
         if data.startswith("logs:filter:"):
