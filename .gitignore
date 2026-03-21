@@ -4,3 +4,4 @@
 bot_files
 logs
 *.log
+*.db
