@@ -413,18 +413,29 @@ class CommandHandler:
     @staticmethod
     @admin_only
     async def py_eval(update: Update, context: ContextTypes.DEFAULT_TYPE):
-        """Python Code Interpreter (Admin Only)."""
-        if not context.args:
-            await update.message.reply_text("❌ Gunakan: `/py <code>`")
+        """Python Code Interpreter (Admin Only). Supports multi-line."""
+        # Get raw text and remove the command part
+        raw_text = update.message.text
+        # Remove /py or /py@botname
+        command_end_idx = raw_text.find(" ")
+        if command_end_idx == -1:
+            if not context.args:
+                await update.message.reply_text("❌ Gunakan: `/py <code>`")
+                return
+            code = " ".join(context.args)
+        else:
+            code = raw_text[command_end_idx:].strip()
+
+        # Handle code blocks using regex for better accuracy
+        import re
+        code_block_match = re.search(r"```(?:python)?\n?(.*?)\n?```", code, re.DOTALL)
+        if code_block_match:
+            code = code_block_match.group(1).strip()
+            
+        if not code:
+            await update.message.reply_text("❌ Tidak ada kode yang ditemukan.")
             return
-            
-        code = " ".join(context.args)
-        # Handle code blocks
-        if code.startswith("```python"):
-            code = code.split("\n", 1)[1].rsplit("\n", 1)[0]
-        elif code.startswith("```"):
-            code = code.split("\n", 1)[1].rsplit("\n", 1)[0]
-            
+
         status_msg = await update.message.reply_text("⏳ **Running Python Code...**")
         output = await EvalService.run_python(code)
         
