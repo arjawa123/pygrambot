@@ -51,7 +51,7 @@ class TermuxService:
     @staticmethod
     async def vibrate(duration_ms: int = 500):
         """Vibrate the device for a specified duration."""
-        await ExecService.run_command(f"termux-vibrate -d {duration_ms}")
+        await ExecService.run_command(f"termux-vibrate -f -d {duration_ms}")
 
     @staticmethod
     async def get_clipboard() -> str:
@@ -144,9 +144,9 @@ class TermuxService:
     @staticmethod
     async def get_wifi_info() -> Optional[List[Dict[str, Any]]]:
         """Get WiFi scan info."""
-        output = await ExecService.run_command("termux-wifi-scaninfo")
+        output = await ExecService.run_command("termux-wifi-scaninfo", max_chars=100000)
         try:
-            return json.loads(output)
+            return json.loads(output, strict=False)
         except (json.JSONDecodeError, Exception) as e:
             logger.error(f"Error parsing WiFi info: {e}")
             return None
@@ -171,7 +171,7 @@ class TermuxService:
     @staticmethod
     async def get_sensors() -> Optional[Any]:
         """Get a list of available sensors."""
-        output = await ExecService.run_command("termux-sensor -l")
+        output = await ExecService.run_command("termux-sensor -l", max_chars=100000)
         try:
             return json.loads(output)
         except (json.JSONDecodeError, Exception) as e:
