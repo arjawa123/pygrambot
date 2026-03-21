@@ -301,6 +301,27 @@ class CommandHandler:
         await chat_h.send_long_message(update, final_text)
 
     @staticmethod
+    @admin_only
+    async def restart(update: Update, context: ContextTypes.DEFAULT_TYPE):
+        """Restart the bot process."""
+        await update.message.reply_text("🔄 **Bot sedang merestart...**\nMohon tunggu beberapa saat.")
+        # Brief delay to ensure message is sent
+        import asyncio
+        await asyncio.sleep(1)
+        SystemService.restart_bot()
+
+    @staticmethod
+    @admin_only
+    async def git_pull(update: Update, context: ContextTypes.DEFAULT_TYPE):
+        """Update code from git repository with custom arguments."""
+        args = " ".join(context.args) if context.args else "pull"
+        status_msg = await update.message.reply_text(f"📥 **Running git {args}...**")
+        output = await SystemService.git_cmd(args)
+        
+        final_text = f"🐙 **Git Result:**\n`git {args}`\n\n```bash\n{output}\n```"
+        await status_msg.edit_text(final_text, parse_mode="Markdown")
+
+    @staticmethod
     async def ping(update: Update, context: ContextTypes.DEFAULT_TYPE):
         await update.message.reply_text("🏓 **Pong!** Bot aktif.")
 

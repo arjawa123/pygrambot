@@ -53,6 +53,8 @@ COMMAND_REGISTRY: List[BotCommandInfo] = [
     BotCommandInfo("hostinfo", "Info host/device", "System", admin_only=True),
     BotCommandInfo("logs", "Lihat log terbaru", "System", admin_only=True, usage="/logs <n>"),
     BotCommandInfo("exec", "Eksekusi CLI command", "System", admin_only=True, usage="/exec <command>"),
+    BotCommandInfo("restart", "Restart bot script", "System", admin_only=True),
+    BotCommandInfo("git", "Update dari repository git", "System", admin_only=True, usage="/git [pull origin master]"),
 
     # Device (Termux API - Admin Only)
     BotCommandInfo("battery", "Cek status baterai device", "Device", admin_only=True),

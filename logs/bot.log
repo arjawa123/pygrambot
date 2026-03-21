@@ -4453,3 +4453,56 @@ telegram.error.NetworkError: httpx.ConnectError: All connection attempts failed
 [2026-03-21 22:34:55] INFO     telegram.ext.Application: Application is stopping. This might take a moment.
 [2026-03-21 22:34:55] INFO     apscheduler.scheduler: Scheduler has been shut down
 [2026-03-21 22:34:55] INFO     telegram.ext.Application: Application.stop() complete
+[2026-03-21 22:50:30] INFO     pygram: 🚀 Pygram AI Bot is running...
+[2026-03-21 22:50:31] INFO     httpx: HTTP Request: POST https://api.telegram.org/bot8794005734:AAEaT_oKgX9mF2T8D0iT_2br1flpqsMLSi8/getMe "HTTP/1.1 200 OK"
+[2026-03-21 22:50:31] INFO     pygram: Database initialized successfully.
+[2026-03-21 22:50:31] INFO     apscheduler.scheduler: Scheduler started
+[2026-03-21 22:50:31] INFO     app.services.reminder_service: ⏰ Scheduler started.
+[2026-03-21 22:50:31] INFO     httpx: HTTP Request: POST https://api.telegram.org/bot8794005734:AAEaT_oKgX9mF2T8D0iT_2br1flpqsMLSi8/setMyCommands "HTTP/1.1 200 OK"
+[2026-03-21 22:50:31] INFO     app.services.telegram_command_service: Successfully registered 42 commands to Telegram slash menu.
+[2026-03-21 22:50:31] INFO     httpx: HTTP Request: POST https://api.telegram.org/bot8794005734:AAEaT_oKgX9mF2T8D0iT_2br1flpqsMLSi8/deleteWebhook "HTTP/1.1 200 OK"
+[2026-03-21 22:50:31] INFO     apscheduler.scheduler: Scheduler started
+[2026-03-21 22:50:31] INFO     telegram.ext.Application: Application started
+[2026-03-21 22:50:40] INFO     httpx: HTTP Request: POST https://api.telegram.org/bot8794005734:AAEaT_oKgX9mF2T8D0iT_2br1flpqsMLSi8/getUpdates "HTTP/1.1 200 OK"
+[2026-03-21 22:50:41] INFO     httpx: HTTP Request: POST https://api.telegram.org/bot8794005734:AAEaT_oKgX9mF2T8D0iT_2br1flpqsMLSi8/sendMessage "HTTP/1.1 200 OK"
+[2026-03-21 22:50:50] INFO     httpx: HTTP Request: POST https://api.telegram.org/bot8794005734:AAEaT_oKgX9mF2T8D0iT_2br1flpqsMLSi8/getUpdates "HTTP/1.1 200 OK"
+[2026-03-21 22:50:50] INFO     httpx: HTTP Request: POST https://api.telegram.org/bot8794005734:AAEaT_oKgX9mF2T8D0iT_2br1flpqsMLSi8/getUpdates "HTTP/1.1 200 OK"
+[2026-03-21 22:50:51] INFO     httpx: HTTP Request: POST https://api.telegram.org/bot8794005734:AAEaT_oKgX9mF2T8D0iT_2br1flpqsMLSi8/sendMessage "HTTP/1.1 200 OK"
+[2026-03-21 22:50:55] INFO     httpx: HTTP Request: POST https://api.telegram.org/bot8794005734:AAEaT_oKgX9mF2T8D0iT_2br1flpqsMLSi8/editMessageText "HTTP/1.1 200 OK"
+[2026-03-21 22:51:01] INFO     httpx: HTTP Request: POST https://api.telegram.org/bot8794005734:AAEaT_oKgX9mF2T8D0iT_2br1flpqsMLSi8/getUpdates "HTTP/1.1 200 OK"
+[2026-03-21 22:51:11] INFO     httpx: HTTP Request: POST https://api.telegram.org/bot8794005734:AAEaT_oKgX9mF2T8D0iT_2br1flpqsMLSi8/getUpdates "HTTP/1.1 200 OK"
+[2026-03-21 22:51:21] INFO     httpx: HTTP Request: POST https://api.telegram.org/bot8794005734:AAEaT_oKgX9mF2T8D0iT_2br1flpqsMLSi8/getUpdates "HTTP/1.1 200 OK"
+[2026-03-21 22:51:31] INFO     httpx: HTTP Request: POST https://api.telegram.org/bot8794005734:AAEaT_oKgX9mF2T8D0iT_2br1flpqsMLSi8/getUpdates "HTTP/1.1 200 OK"
+[2026-03-21 22:51:42] INFO     httpx: HTTP Request: POST https://api.telegram.org/bot8794005734:AAEaT_oKgX9mF2T8D0iT_2br1flpqsMLSi8/getUpdates "HTTP/1.1 200 OK"
+[2026-03-21 22:51:52] INFO     httpx: HTTP Request: POST https://api.telegram.org/bot8794005734:AAEaT_oKgX9mF2T8D0iT_2br1flpqsMLSi8/getUpdates "HTTP/1.1 200 OK"
+[2026-03-21 22:52:02] INFO     httpx: HTTP Request: POST https://api.telegram.org/bot8794005734:AAEaT_oKgX9mF2T8D0iT_2br1flpqsMLSi8/getUpdates "HTTP/1.1 200 OK"
+[2026-03-21 22:52:13] INFO     httpx: HTTP Request: POST https://api.telegram.org/bot8794005734:AAEaT_oKgX9mF2T8D0iT_2br1flpqsMLSi8/getUpdates "HTTP/1.1 200 OK"
+[2026-03-21 22:52:23] INFO     httpx: HTTP Request: POST https://api.telegram.org/bot8794005734:AAEaT_oKgX9mF2T8D0iT_2br1flpqsMLSi8/getUpdates "HTTP/1.1 200 OK"
+[2026-03-21 22:52:33] INFO     httpx: HTTP Request: POST https://api.telegram.org/bot8794005734:AAEaT_oKgX9mF2T8D0iT_2br1flpqsMLSi8/getUpdates "HTTP/1.1 200 OK"
+[2026-03-21 22:52:43] INFO     httpx: HTTP Request: POST https://api.telegram.org/bot8794005734:AAEaT_oKgX9mF2T8D0iT_2br1flpqsMLSi8/getUpdates "HTTP/1.1 200 OK"
+[2026-03-21 22:52:54] INFO     httpx: HTTP Request: POST https://api.telegram.org/bot8794005734:AAEaT_oKgX9mF2T8D0iT_2br1flpqsMLSi8/getUpdates "HTTP/1.1 200 OK"
+[2026-03-21 22:53:04] INFO     httpx: HTTP Request: POST https://api.telegram.org/bot8794005734:AAEaT_oKgX9mF2T8D0iT_2br1flpqsMLSi8/getUpdates "HTTP/1.1 200 OK"
+[2026-03-21 22:53:14] INFO     httpx: HTTP Request: POST https://api.telegram.org/bot8794005734:AAEaT_oKgX9mF2T8D0iT_2br1flpqsMLSi8/getUpdates "HTTP/1.1 200 OK"
+[2026-03-21 22:53:24] INFO     httpx: HTTP Request: POST https://api.telegram.org/bot8794005734:AAEaT_oKgX9mF2T8D0iT_2br1flpqsMLSi8/getUpdates "HTTP/1.1 200 OK"
+[2026-03-21 22:53:35] INFO     httpx: HTTP Request: POST https://api.telegram.org/bot8794005734:AAEaT_oKgX9mF2T8D0iT_2br1flpqsMLSi8/getUpdates "HTTP/1.1 200 OK"
+[2026-03-21 22:53:41] INFO     httpx: HTTP Request: POST https://api.telegram.org/bot8794005734:AAEaT_oKgX9mF2T8D0iT_2br1flpqsMLSi8/getUpdates "HTTP/1.1 200 OK"
+[2026-03-21 22:53:42] INFO     httpx: HTTP Request: POST https://api.telegram.org/bot8794005734:AAEaT_oKgX9mF2T8D0iT_2br1flpqsMLSi8/sendMessage "HTTP/1.1 200 OK"
+[2026-03-21 22:53:44] INFO     pygram: 🚀 Pygram AI Bot is running...
+[2026-03-21 22:53:45] INFO     httpx: HTTP Request: POST https://api.telegram.org/bot8794005734:AAEaT_oKgX9mF2T8D0iT_2br1flpqsMLSi8/getMe "HTTP/1.1 200 OK"
+[2026-03-21 22:53:45] INFO     pygram: Database initialized successfully.
+[2026-03-21 22:53:45] INFO     apscheduler.scheduler: Scheduler started
+[2026-03-21 22:53:45] INFO     app.services.reminder_service: ⏰ Scheduler started.
+[2026-03-21 22:53:46] INFO     httpx: HTTP Request: POST https://api.telegram.org/bot8794005734:AAEaT_oKgX9mF2T8D0iT_2br1flpqsMLSi8/setMyCommands "HTTP/1.1 200 OK"
+[2026-03-21 22:53:46] INFO     app.services.telegram_command_service: Successfully registered 42 commands to Telegram slash menu.
+[2026-03-21 22:53:46] INFO     httpx: HTTP Request: POST https://api.telegram.org/bot8794005734:AAEaT_oKgX9mF2T8D0iT_2br1flpqsMLSi8/deleteWebhook "HTTP/1.1 200 OK"
+[2026-03-21 22:53:46] INFO     apscheduler.scheduler: Scheduler started
+[2026-03-21 22:53:46] INFO     telegram.ext.Application: Application started
+[2026-03-21 22:53:57] INFO     httpx: HTTP Request: POST https://api.telegram.org/bot8794005734:AAEaT_oKgX9mF2T8D0iT_2br1flpqsMLSi8/getUpdates "HTTP/1.1 200 OK"
+[2026-03-21 22:53:58] INFO     httpx: HTTP Request: POST https://api.telegram.org/bot8794005734:AAEaT_oKgX9mF2T8D0iT_2br1flpqsMLSi8/getUpdates "HTTP/1.1 200 OK"
+[2026-03-21 22:53:59] INFO     httpx: HTTP Request: POST https://api.telegram.org/bot8794005734:AAEaT_oKgX9mF2T8D0iT_2br1flpqsMLSi8/sendMessage "HTTP/1.1 200 OK"
+[2026-03-21 22:54:09] INFO     httpx: HTTP Request: POST https://api.telegram.org/bot8794005734:AAEaT_oKgX9mF2T8D0iT_2br1flpqsMLSi8/getUpdates "HTTP/1.1 200 OK"
+[2026-03-21 22:54:09] INFO     httpx: HTTP Request: POST https://api.telegram.org/bot8794005734:AAEaT_oKgX9mF2T8D0iT_2br1flpqsMLSi8/getUpdates "HTTP/1.1 200 OK"
+[2026-03-21 22:54:10] INFO     httpx: HTTP Request: POST https://api.telegram.org/bot8794005734:AAEaT_oKgX9mF2T8D0iT_2br1flpqsMLSi8/sendMessage "HTTP/1.1 200 OK"
+[2026-03-21 22:54:11] INFO     httpx: HTTP Request: POST https://api.telegram.org/bot8794005734:AAEaT_oKgX9mF2T8D0iT_2br1flpqsMLSi8/editMessageText "HTTP/1.1 200 OK"
+[2026-03-21 22:54:19] INFO     httpx: HTTP Request: POST https://api.telegram.org/bot8794005734:AAEaT_oKgX9mF2T8D0iT_2br1flpqsMLSi8/getUpdates "HTTP/1.1 200 OK"
+[2026-03-21 22:54:30] INFO     httpx: HTTP Request: POST https://api.telegram.org/bot8794005734:AAEaT_oKgX9mF2T8D0iT_2br1flpqsMLSi8/getUpdates "HTTP/1.1 200 OK"

@@ -97,6 +97,8 @@ def main():
     app.add_handler(TelegramCommandHandler("hostinfo", CommandHandler.hostinfo))
     app.add_handler(TelegramCommandHandler("logs", CommandHandler.logs))
     app.add_handler(TelegramCommandHandler("exec", CommandHandler.exec_cmd))
+    app.add_handler(TelegramCommandHandler("restart", CommandHandler.restart))
+    app.add_handler(TelegramCommandHandler("git", CommandHandler.git_pull))
     
     # Memory Commands
     app.add_handler(TelegramCommandHandler("remember", CommandHandler.remember))

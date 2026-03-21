@@ -55,6 +55,18 @@ class SystemService:
         }
 
     @classmethod
+    def restart_bot(cls):
+        """Restart the current process."""
+        python = sys.executable
+        os.execl(python, python, *sys.argv)
+
+    @classmethod
+    async def git_cmd(cls, args: str = "pull") -> str:
+        """Perform git commands."""
+        from app.services.exec_service import ExecService
+        return await ExecService.run_command(f"git {args}")
+
+    @classmethod
     def get_host_info_formatted(cls) -> str:
         """Return host info formatted for Telegram."""
         info = cls.get_detailed_info()
