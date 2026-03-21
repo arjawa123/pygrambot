@@ -4403,3 +4403,53 @@ telegram.error.NetworkError: httpx.ConnectError: All connection attempts failed
 [2026-03-21 21:35:43] INFO     telegram.ext.Application: Application is stopping. This might take a moment.
 [2026-03-21 21:35:43] INFO     apscheduler.scheduler: Scheduler has been shut down
 [2026-03-21 21:35:43] INFO     telegram.ext.Application: Application.stop() complete
+[2026-03-21 22:32:09] INFO     pygram: 🚀 Pygram AI Bot is running...
+[2026-03-21 22:32:10] INFO     httpx: HTTP Request: POST https://api.telegram.org/bot8794005734:AAEaT_oKgX9mF2T8D0iT_2br1flpqsMLSi8/getMe "HTTP/1.1 200 OK"
+[2026-03-21 22:32:10] INFO     pygram: Database initialized successfully.
+[2026-03-21 22:32:10] INFO     apscheduler.scheduler: Scheduler started
+[2026-03-21 22:32:10] INFO     app.services.reminder_service: ⏰ Scheduler started.
+[2026-03-21 22:32:10] INFO     httpx: HTTP Request: POST https://api.telegram.org/bot8794005734:AAEaT_oKgX9mF2T8D0iT_2br1flpqsMLSi8/setMyCommands "HTTP/1.1 200 OK"
+[2026-03-21 22:32:10] INFO     app.services.telegram_command_service: Successfully registered 40 commands to Telegram slash menu.
+[2026-03-21 22:32:11] INFO     httpx: HTTP Request: POST https://api.telegram.org/bot8794005734:AAEaT_oKgX9mF2T8D0iT_2br1flpqsMLSi8/deleteWebhook "HTTP/1.1 200 OK"
+[2026-03-21 22:32:11] INFO     apscheduler.scheduler: Scheduler started
+[2026-03-21 22:32:11] INFO     telegram.ext.Application: Application started
+[2026-03-21 22:32:12] INFO     httpx: HTTP Request: POST https://api.telegram.org/bot8794005734:AAEaT_oKgX9mF2T8D0iT_2br1flpqsMLSi8/getUpdates "HTTP/1.1 200 OK"
+[2026-03-21 22:32:12] INFO     httpx: HTTP Request: POST https://api.telegram.org/bot8794005734:AAEaT_oKgX9mF2T8D0iT_2br1flpqsMLSi8/sendMessage "HTTP/1.1 200 OK"
+[2026-03-21 22:32:15] INFO     httpx: HTTP Request: POST https://api.telegram.org/bot8794005734:AAEaT_oKgX9mF2T8D0iT_2br1flpqsMLSi8/sendMessage "HTTP/1.1 200 OK"
+[2026-03-21 22:32:22] INFO     httpx: HTTP Request: POST https://api.telegram.org/bot8794005734:AAEaT_oKgX9mF2T8D0iT_2br1flpqsMLSi8/getUpdates "HTTP/1.1 200 OK"
+[2026-03-21 22:32:29] INFO     httpx: HTTP Request: POST https://api.telegram.org/bot8794005734:AAEaT_oKgX9mF2T8D0iT_2br1flpqsMLSi8/getUpdates "HTTP/1.1 200 OK"
+[2026-03-21 22:32:30] INFO     httpx: HTTP Request: POST https://api.telegram.org/bot8794005734:AAEaT_oKgX9mF2T8D0iT_2br1flpqsMLSi8/sendMessage "HTTP/1.1 200 OK"
+[2026-03-21 22:32:39] INFO     httpx: HTTP Request: POST https://api.telegram.org/bot8794005734:AAEaT_oKgX9mF2T8D0iT_2br1flpqsMLSi8/getUpdates "HTTP/1.1 200 OK"
+[2026-03-21 22:32:49] INFO     httpx: HTTP Request: POST https://api.telegram.org/bot8794005734:AAEaT_oKgX9mF2T8D0iT_2br1flpqsMLSi8/getUpdates "HTTP/1.1 200 OK"
+[2026-03-21 22:32:59] INFO     httpx: HTTP Request: POST https://api.telegram.org/bot8794005734:AAEaT_oKgX9mF2T8D0iT_2br1flpqsMLSi8/getUpdates "HTTP/1.1 200 OK"
+[2026-03-21 22:33:00] INFO     httpx: HTTP Request: POST https://api.telegram.org/bot8794005734:AAEaT_oKgX9mF2T8D0iT_2br1flpqsMLSi8/sendMessage "HTTP/1.1 200 OK"
+[2026-03-21 22:33:02] INFO     app.services.termux_service: Downloading audio from https://www.myinstants.com/media/sounds/hidup-jokowi.mp3
+[2026-03-21 22:33:02] INFO     app.services.termux_service: Playing audio: /data/data/com.termux/files/home/bot/pygrambot/bot_files/play_cache.mp3
+[2026-03-21 22:33:03] INFO     httpx: HTTP Request: POST https://api.telegram.org/bot8794005734:AAEaT_oKgX9mF2T8D0iT_2br1flpqsMLSi8/editMessageText "HTTP/1.1 200 OK"
+[2026-03-21 22:33:10] INFO     httpx: HTTP Request: POST https://api.telegram.org/bot8794005734:AAEaT_oKgX9mF2T8D0iT_2br1flpqsMLSi8/getUpdates "HTTP/1.1 200 OK"
+[2026-03-21 22:33:20] INFO     httpx: HTTP Request: POST https://api.telegram.org/bot8794005734:AAEaT_oKgX9mF2T8D0iT_2br1flpqsMLSi8/getUpdates "HTTP/1.1 200 OK"
+[2026-03-21 22:33:30] INFO     httpx: HTTP Request: POST https://api.telegram.org/bot8794005734:AAEaT_oKgX9mF2T8D0iT_2br1flpqsMLSi8/getUpdates "HTTP/1.1 200 OK"
+[2026-03-21 22:33:36] INFO     httpx: HTTP Request: POST https://api.telegram.org/bot8794005734:AAEaT_oKgX9mF2T8D0iT_2br1flpqsMLSi8/getUpdates "HTTP/1.1 200 OK"
+[2026-03-21 22:33:36] INFO     telegram.ext.Application: Application is stopping. This might take a moment.
+[2026-03-21 22:33:36] INFO     apscheduler.scheduler: Scheduler has been shut down
+[2026-03-21 22:33:36] INFO     telegram.ext.Application: Application.stop() complete
+[2026-03-21 22:34:36] INFO     pygram: 🚀 Pygram AI Bot is running...
+[2026-03-21 22:34:37] INFO     httpx: HTTP Request: POST https://api.telegram.org/bot8794005734:AAEaT_oKgX9mF2T8D0iT_2br1flpqsMLSi8/getMe "HTTP/1.1 200 OK"
+[2026-03-21 22:34:37] INFO     pygram: Database initialized successfully.
+[2026-03-21 22:34:37] INFO     apscheduler.scheduler: Scheduler started
+[2026-03-21 22:34:37] INFO     app.services.reminder_service: ⏰ Scheduler started.
+[2026-03-21 22:34:38] INFO     httpx: HTTP Request: POST https://api.telegram.org/bot8794005734:AAEaT_oKgX9mF2T8D0iT_2br1flpqsMLSi8/setMyCommands "HTTP/1.1 200 OK"
+[2026-03-21 22:34:38] INFO     app.services.telegram_command_service: Successfully registered 40 commands to Telegram slash menu.
+[2026-03-21 22:34:38] INFO     httpx: HTTP Request: POST https://api.telegram.org/bot8794005734:AAEaT_oKgX9mF2T8D0iT_2br1flpqsMLSi8/deleteWebhook "HTTP/1.1 200 OK"
+[2026-03-21 22:34:38] INFO     apscheduler.scheduler: Scheduler started
+[2026-03-21 22:34:38] INFO     telegram.ext.Application: Application started
+[2026-03-21 22:34:39] INFO     httpx: HTTP Request: POST https://api.telegram.org/bot8794005734:AAEaT_oKgX9mF2T8D0iT_2br1flpqsMLSi8/getUpdates "HTTP/1.1 200 OK"
+[2026-03-21 22:34:39] INFO     httpx: HTTP Request: POST https://api.telegram.org/bot8794005734:AAEaT_oKgX9mF2T8D0iT_2br1flpqsMLSi8/sendMessage "HTTP/1.1 200 OK"
+[2026-03-21 22:34:41] INFO     app.services.termux_service: Downloading audio from https://www.myinstants.com/media/sounds/fahhhhhhhhhhhhhh.mp3
+[2026-03-21 22:34:41] INFO     app.services.termux_service: Playing audio: /data/data/com.termux/files/home/bot/pygrambot/bot_files/play_cache.mp3
+[2026-03-21 22:34:41] INFO     httpx: HTTP Request: POST https://api.telegram.org/bot8794005734:AAEaT_oKgX9mF2T8D0iT_2br1flpqsMLSi8/editMessageText "HTTP/1.1 200 OK"
+[2026-03-21 22:34:49] INFO     httpx: HTTP Request: POST https://api.telegram.org/bot8794005734:AAEaT_oKgX9mF2T8D0iT_2br1flpqsMLSi8/getUpdates "HTTP/1.1 200 OK"
+[2026-03-21 22:34:55] INFO     httpx: HTTP Request: POST https://api.telegram.org/bot8794005734:AAEaT_oKgX9mF2T8D0iT_2br1flpqsMLSi8/getUpdates "HTTP/1.1 200 OK"
+[2026-03-21 22:34:55] INFO     telegram.ext.Application: Application is stopping. This might take a moment.
+[2026-03-21 22:34:55] INFO     apscheduler.scheduler: Scheduler has been shut down
+[2026-03-21 22:34:55] INFO     telegram.ext.Application: Application.stop() complete

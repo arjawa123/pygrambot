@@ -177,3 +177,34 @@ class TermuxService:
         except (json.JSONDecodeError, Exception) as e:
             logger.error(f"Error parsing sensor info: {e}")
             return None
+
+    @staticmethod
+    async def play_audio(url: str) -> str:
+        """Download and play audio using termux-media-player."""
+        file_path = os.path.abspath("bot_files/play_cache.mp3")
+        os.makedirs(os.path.dirname(file_path), exist_ok=True)
+        
+        # Stop any existing playback first
+        await ExecService.run_command("termux-media-player stop")
+        
+        # Download using curl
+        safe_url = shlex.quote(url)
+        safe_path = shlex.quote(file_path)
+        
+        # -L to follow redirects
+        logger.info(f"Downloading audio from {url}")
+        download_cmd = f"curl -L -o {safe_path} {safe_url}"
+        await ExecService.run_command(download_cmd, timeout=60)
+        
+        if os.path.exists(file_path) and os.path.getsize(file_path) > 0:
+            logger.info(f"Playing audio: {file_path}")
+            await ExecService.run_detached(f"termux-media-player play {safe_path}")
+            return "✅ Audio sedang diputar di device server."
+        else:
+            return "❌ Gagal mendownload audio. Pastikan URL valid dan dapat diakses langsung."
+
+    @staticmethod
+    async def stop_audio() -> str:
+        """Stop audio playback."""
+        await ExecService.run_command("termux-media-player stop")
+        return "⏹️ Playback dihentikan."

@@ -70,6 +70,8 @@ COMMAND_REGISTRY: List[BotCommandInfo] = [
     BotCommandInfo("telephony", "Cek info telepon & device", "Device", admin_only=True),
     BotCommandInfo("sensor", "Daftar sensor yang tersedia", "Device", admin_only=True),
     BotCommandInfo("sms_send", "Kirim SMS dari device", "Device", admin_only=True, usage="/sms_send <nomor> <pesan>"),
+    BotCommandInfo("play", "Putar audio dari URL di device", "Device", admin_only=True, usage="/play <url>"),
+    BotCommandInfo("stopplay", "Hentikan putaran audio", "Device", admin_only=True),
 ]
 
 def get_commands_by_category():

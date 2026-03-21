@@ -129,6 +129,8 @@ def main():
     app.add_handler(TelegramCommandHandler("telephony", TermuxHandler.telephony_command))
     app.add_handler(TelegramCommandHandler("sensor", TermuxHandler.sensor_command))
     app.add_handler(TelegramCommandHandler("sms_send", TermuxHandler.sms_send_command))
+    app.add_handler(TelegramCommandHandler("play", TermuxHandler.play_command))
+    app.add_handler(TelegramCommandHandler("stopplay", TermuxHandler.stop_play_command))
 
     # Callback Handlers
     app.add_handler(CallbackQueryHandler(CommandHandler.handle_callback))

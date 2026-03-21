@@ -293,3 +293,24 @@ class TermuxHandler:
         
         # Limit output to prevent Telegram message length limits
         await update.message.reply_text("\n".join(lines[:30]), parse_mode=ParseMode.HTML)
+
+    @staticmethod
+    @admin_only
+    async def play_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
+        """Handler for /play <url> command."""
+        if not context.args:
+            await update.message.reply_text("Usage: <code>/play &lt;url_audio&gt;</code>", parse_mode=ParseMode.HTML)
+            return
+        
+        url = context.args[0]
+        status_msg = await update.message.reply_text(f"⏳ Sedang mendownload dan memproses audio...")
+        
+        result = await TermuxService.play_audio(url)
+        await status_msg.edit_text(result)
+
+    @staticmethod
+    @admin_only
+    async def stop_play_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
+        """Handler for /stopplay command."""
+        result = await TermuxService.stop_audio()
+        await update.message.reply_text(result)
